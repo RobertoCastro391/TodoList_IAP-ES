@@ -8,6 +8,7 @@ from app.models.enums import Priority, Status  # Import the Priority and Status 
 class Task(Base):
     __tablename__ = 'task'
 
+
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(255), nullable=False)
     description = Column(String(255), nullable=True)
