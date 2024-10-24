@@ -1,0 +1,25 @@
+/* TaskList.css */
+.task-list-container {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.task-list-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.task-list-container li {
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.task-list-container li:hover {
+    background-color: #ececec;
+}
