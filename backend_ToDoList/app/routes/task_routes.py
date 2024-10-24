@@ -12,6 +12,7 @@ router = APIRouter(
     tags=["tasks"]
 )
 
+
 @router.post("/", response_model=TaskRead)
 def create_task(task_create: TaskCreate, db: Session = Depends(get_db)):
     try:
