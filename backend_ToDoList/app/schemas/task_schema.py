@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Optional
 from app.models.enums import Priority, Status
@@ -18,5 +18,4 @@ class TaskRead(TaskCreate):
     updated_at: datetime
     user: UserRead
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

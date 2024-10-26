@@ -19,4 +19,4 @@ def create_user(db: Session, user_create: UserCreate) -> User:
 
 def get_users(db: Session) -> List[UserRead]:
     users = db.query(User).all()
-    return [UserRead.from_orm(user) for user in users]
+    return [UserRead.model_validate(user) for user in users]
