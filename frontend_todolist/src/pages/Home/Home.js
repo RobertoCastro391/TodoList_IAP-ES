@@ -18,6 +18,14 @@ const Home = () => {
     setSelectedTask(task);
   };
 
+  const handleUpdateTaskStatus = (taskToUpdate, newStatus) => {
+    const updatedTasks = tasks.map((task) =>
+      task === taskToUpdate ? { ...task, status: newStatus } : task
+    );
+    setTasks(updatedTasks);
+    setSelectedTask({ ...taskToUpdate, status: newStatus }); // Update selected task as well
+  };
+
   return (
     <div className="container_home">
       <div className="sidebar-container">
@@ -29,16 +37,26 @@ const Home = () => {
         />
       </div>
 
-      <div className="tasks-container">
-        <div className="task-list-container">
-          <TaskList tasks={tasks} onSelectTask={handleSelectTask} />
-        </div>
+      {isSignedIn && (
+        <>
+          <div className="task-list-container-home">
+            <TaskList 
+              tasks={tasks} 
+              onSelectTask={handleSelectTask} 
+            />
+          </div>
 
-        <div className="task-form-and-details">
-          <AddTask onAddTask={handleAddTask} />
-          {selectedTask && <TaskDetails task={selectedTask} />}
-        </div>
-      </div>
+          <div className="task-form-and-details">
+            <AddTask onAddTask={handleAddTask} />
+            {selectedTask && (
+              <TaskDetails 
+                task={selectedTask} 
+                onUpdateTaskStatus={handleUpdateTaskStatus} 
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
