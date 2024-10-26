@@ -5,10 +5,13 @@ from app.database import Base
 
 class User(Base):
     __tablename__ = 'user'
+
     id = Column(Integer, primary_key=True, autoincrement=True)
     cognito_id = Column(String(255), nullable=False)
+    username = Column(String(100), nullable=False)
     email = Column(String(100), unique=True, nullable=False)
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, default=datetime.now())
 
+    # Use string reference for tasks relationship
     tasks = relationship('Task', back_populates='user')
