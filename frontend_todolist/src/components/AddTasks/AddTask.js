@@ -30,7 +30,7 @@ const AddTask = ({ onAddTask }) => {
 
   return (
     <div className="add-task">
-      <button className="open-modal-button" onClick={openModal}>
+      <button className="open-modal-button" id="openModal" onClick={openModal}>
         Add New Task
       </button>
 
@@ -71,7 +71,7 @@ const AddTask = ({ onAddTask }) => {
               </select>
             </div>
             <div className="modal-actions">
-              <button className="add-button" onClick={handleAddTask}>
+              <button className="add-button" id="addTaskButton" onClick={handleAddTask}>
                 Add Task
               </button>
               <button className="cancel-button" onClick={closeModal}>

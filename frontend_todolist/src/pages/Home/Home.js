@@ -6,7 +6,7 @@ import AddTask from "../../components/AddTasks/AddTask";
 import TaskDetails from "../../components/TaskDetails/TaskDetails";
 
 const Home = () => {
-  const [isSignedIn, setIsSignedIn] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
 

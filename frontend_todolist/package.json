@@ -18,7 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "cucumber-js --import test/step_definitions/**/*.js --import test/support/**/*.js test/features/**/*.feature --format progress",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -38,5 +38,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.0.1",
+    "chai": "^5.1.2",
+    "chromedriver": "^130.0.1",
+    "cucumber": "^6.0.7",
+    "selenium-webdriver": "^4.25.0"
   }
 }

@@ -60,7 +60,7 @@ const Sidebar = ({ isSignedIn, setIsSignedIn, name, email }) => {
           <h3>Welcome!</h3>
           <p>Please sign in to access your dashboard.</p>
           <ul>
-            <li onClick={() => setIsSignedIn(true)}>
+            <li onClick={() => setIsSignedIn(true)} id="login_button">
               <FontAwesomeIcon icon={faSignInAlt} className="icon" />
               Login
             </li>
