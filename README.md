@@ -1,1 +1,3 @@
-# TodoList_IAP-ES
+### 27/10/2024 - 19H40
+
+## US 1.2 Done
