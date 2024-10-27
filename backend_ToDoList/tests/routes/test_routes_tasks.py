@@ -165,3 +165,47 @@ def test_read_all_tasks(client):
         assert data[0]["description"] == mocked_task["description"]
         assert data[0]["user"]["id"] == user_id
         assert data[0]["user"]["cognito_id"] == mocked_task["user"]["cognito_id"]
+
+def test_change_task_status(client):
+    # Arrange: Use the user with ID 1 which is created directly in the database
+    user_id = 1
+
+    requested_task = {
+        "task_id": 1,
+        "status": "In Progress"
+    }
+
+    mocked_task = {
+        "id": 1,
+        "title": "Test Task",
+        "description": "This is a test task",
+        "deadline": "2021-12-31T23:59:59",
+        "priority": "High",
+        "status": "In Progress",
+        "created_at": datetime.now(),
+        "updated_at": datetime.now(),
+        "user_id": user_id,
+        "user": {
+            "id": user_id,
+            "email": "test@test.com",
+            "username": "test",
+            "cognito_id": "test_cognito_id",  # Adding missing field
+            "created_at": datetime.now(),  # Adding missing field
+            "updated_at": datetime.now(),  # Adding missing field
+        }
+    }
+
+
+    # Patch the 'get_tasks' function to return the mocked task
+    with patch('app.routes.task_routes.task_service.update_task_status') as mock_change_task_status:
+        mock_change_task_status.return_value = mocked_task
+
+        # Act
+        response = client.put("/api/tasks/updateStatus", json=requested_task)
+
+        # Assert
+        assert response.status_code == 200
+        data = response.json()
+
+        # Validate task fields
+        assert data["status"] == "In Progress"

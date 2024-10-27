@@ -1,3 +1,5 @@
+### 26-10-2024 - 13H00
+
 # TDLIE-29: Implement the Task Creation API Endpoint
 
 ## Overview
@@ -66,3 +68,43 @@ This user story focuses on implementing the API endpoint that allows users to cr
 ## Testing
 - **Unit Tests:** Created to validate the functionality of the endpoint, covering both successful creation and failure scenarios.
 - **Exception Handling Test:** Added a test case using `unittest.mock.patch` to simulate an exception during task creation to validate that the endpoint correctly returns a 400 response.
+
+
+### 27-10-2024 - 12H00
+
+# TDLIE-32: Implement the Task Completation (Status Change) API Endpoint
+
+## Overview
+
+This task make part of the user story that focuses on implementing the API endpoint that allows users to change the status of an existing task. The implementation was done using FastAPI with Python, integrating with the existing database model and following proper validation rules to ensure accurate status changes.
+
+## Enpoint Details 
+- **Endpoint:** `/api/tasks/updateStatus`
+- **HTTP Method:** PUT
+- **Description:** This endpoint allows authenticated users to change the status of a task by providing the necessary details, such as the task ID and the new status value.
+- **Input Schema:** `TaskUpdate`
+  - `task_id`: The *ID* of the task (required).
+  - `title`: The new task title (optional). 
+  - `description`: The description of the task (optional).
+  - `deadline`: The deadline date and time for the task (optional).
+  - `priority`: Priority level of the task (optional).
+  - `status`: Status of the task (optional).
+
+### Request Example
+```json
+{
+  "task_id": 12,
+  "status": "Completed"
+}
+```
+
+## Implementation Details
+- The endpoint uses the `TaskUpdate` schema to validate input data.
+- The service function verifies that the provided `task_id` exists in the database.
+- If the task exists, the `status` is updated and the `updated_at` timestamp is refreshed.
+- Exception handling is implemented to manage scenarios where the task is not found or if the status value is invalid, returning the appropriate error responses.
+
+## Testing
+- **Unit Tests**: Added unit tests to validate the functionality of the endpoint, covering successful status updates and failure scenarios, such as when the task does not exist or when an invalid status value is provided.
+
+- **Exception Handling Test**: Simulated error cases using ?`unittest.mock.patch` to validate that the endpoint correctly handles exceptions and returns suitable error messages.
