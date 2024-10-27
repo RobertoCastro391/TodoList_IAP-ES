@@ -58,18 +58,6 @@ const AddTask = ({ onAddTask }) => {
                 rows="4"
               />
             </div>
-            <div className="input-group">
-              <label htmlFor="taskStatus">Task Status</label>
-              <select
-                id="taskStatus"
-                value={newTaskStatus}
-                onChange={(e) => setNewTaskStatus(e.target.value)}
-              >
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Done">Done</option>
-              </select>
-            </div>
             <div className="modal-actions">
               <button className="add-button" id="addTaskButton" onClick={handleAddTask}>
                 Add Task

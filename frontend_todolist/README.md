@@ -26,3 +26,30 @@ The objective of this task was to create a UI component that allows users to add
 
 ## Overview
 The objective of this task was to integrate call from the UI to the FastAPI endpoints to create tha task and save it to the DB.
+
+### 27/10/2024 - 19:30
+
+# TDLIE-33: Update the UI to Allow Marking Tasks as Complete (React)
+
+## Overview
+This task focused on updating the UI to provide a mechanism for users to update task status. This feature is implemented using React and integrates with the existing backend API to update the task status.
+
+## UI Details
+- **Component Updated**: `TaskDetails` and `TaskList`
+- **Interaction Flow**: 
+    - Users can click on the task status field to enable editing.
+    - The status can be changed through a dropdown, followed by clicking the "Save" button to confirm the status update.
+
+## Implementation Details
+- **Task Details Component (`TaskDetails`)**:
+    - Added an edit mode for task status.
+    - Introduced a dropdown menu for selecting different statuses (`Pending`, `In Progress`, `Completed`).
+    - A _Save_ button is provided to save changes, and a _Cancel_ button allows users to discard changes.
+
+- **Task List Component (`TaskList`)**:
+    - Displays tasks in a list format, allowing users to click on a task to view and edit details.
+
+## Testing 
+- **E2E Tests**:
+    - Updated the existing Cucumber tests to validate the new functionality.
+    - Tests cover scenarios for changing the status of a task, including saving and cancelling changes.
