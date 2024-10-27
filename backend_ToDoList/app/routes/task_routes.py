@@ -15,7 +15,6 @@ router = APIRouter(
 
 @router.post("/", response_model=TaskRead)
 def create_task(task_create: TaskCreate, db: Session = Depends(get_db)):
-        print(task_create)
         task_saved = task_service.create_task(db=db, task_create=task_create)
         return task_saved
     
