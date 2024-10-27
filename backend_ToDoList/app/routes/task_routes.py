@@ -24,12 +24,9 @@ def read_user_tasks(user_id: int, db: Session = Depends(get_db)):
     tasks = task_service.get_user_tasks(db=db, user_id=user_id)
     return tasks
 
-@router.post("/updateStatus", response_model=TaskRead)
+@router.put("/updateStatus", response_model=TaskRead)
 def update_task_status(task_update: TaskUpdate, db: Session = Depends(get_db)):
     task = task_service.update_task_status(db=db, task_update=task_update)
-
-    print("Cheguei AQUIII")
-
     return task
     
 @router.get("/", response_model=List[TaskRead])

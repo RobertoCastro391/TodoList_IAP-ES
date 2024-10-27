@@ -3,7 +3,7 @@ from fastapi import HTTPException
 from datetime import datetime
 from app.services import task_service
 from app.models.enums import Priority, Status
-from app.schemas.task_schema import TaskCreate
+from app.schemas.task_schema import TaskCreate, TaskUpdate
 
 
 def test_create_task_success(db_session):
@@ -116,3 +116,41 @@ def test_get_all_tasks(db_session):
     assert len(all_tasks) == 2
     assert all_tasks[0].title == "Test Task 1"
     assert all_tasks[1].title == "Test Task 2"
+
+
+def test_change_status_task_success(db_session):
+
+    user_id = 1
+    
+    task_create = TaskCreate(
+        title="Test Task",
+        description="This is a test task",
+        deadline=datetime.now(),
+        priority=Priority.HIGH,
+        status=Status.PENDING,
+        user_id=user_id
+    )
+
+    task = task_service.create_task(db_session, task_create)
+
+    task_update = TaskUpdate(
+        task_id=task.id,
+        status=Status.COMPLETED
+    )
+
+    task = task_service.update_task_status(db_session, task_update)
+
+    assert task.status == Status.COMPLETED
+
+def test_change_status_task_not_found(db_session):
+    
+        task_update = TaskUpdate(
+            task_id=999,
+            status=Status.COMPLETED
+        )
+    
+        with pytest.raises(HTTPException) as exc_info:
+            task_service.update_task_status(db_session, task_update)
+        assert exc_info.value.status_code == 404
+        assert exc_info.value.detail == "Task not found"
+        
