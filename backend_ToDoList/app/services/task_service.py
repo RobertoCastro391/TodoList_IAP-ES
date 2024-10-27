@@ -64,6 +64,8 @@ def update_task_status(db: Session, task_update: TaskUpdate) -> Task:
     
     # Update the task status
     task.status = task_update.status
+    task.updated_at = datetime.now()
+    
     db.commit()
     db.refresh(task)
 
