@@ -11,8 +11,8 @@ const TaskList = ({ tasks, onSelectTask }) => {
         {tasks.map((task, index) => (
           <div className="task-card" key={index} onClick={() => onSelectTask(task)}>
             <div className="task-card-content">
-              <h4>{task.title}</h4>
-              <p>Status: <strong>{task.status}</strong></p>
+              <h4 id="task_title">{task.title}</h4>
+              <p id="status_details">Status: <strong>{task.status}</strong></p>
             </div>
           </div>
         ))}

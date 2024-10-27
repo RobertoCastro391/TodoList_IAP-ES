@@ -35,9 +35,9 @@ const TaskDetails = ({ task, onUpdateTaskStatus }) => {
                 onChange={(e) => setNewStatus(e.target.value)}
                 className="status-dropdown"
               >
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
+                <option value="Pending" id="pending">Pending</option>
+                <option value="In Progress" id="In Progress">In Progress</option>
+                <option value="Completed" id="Completed">Completed</option>
               </select>
               <button className="save-status-button" onClick={handleStatusChange}>
                 Save
@@ -47,7 +47,7 @@ const TaskDetails = ({ task, onUpdateTaskStatus }) => {
               </button>
             </div>
           ) : (
-            <div className={`status-badge ${task.status.replace(/\s+/g, '-').toLowerCase()}`} onClick={() => setIsEditingStatus(true)}>
+            <div className={`status-badge ${task.status.replace(/\s+/g, '-').toLowerCase()}`} id="statusButton" onClick={() => setIsEditingStatus(true)}>
               <FontAwesomeIcon
                 icon={
                   task.status === "Pending" ? faSpinner :
