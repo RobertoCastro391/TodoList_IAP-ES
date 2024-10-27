@@ -12,6 +12,9 @@ def create_task(db: Session, task_create: TaskCreate) -> Task:
     try:
         # Check if user exists
         user = db.query(User).filter(User.id == task_create.user_id).one()
+        print("task_create")
+        print(user)
+
     except NoResultFound:
         # Raise an HTTP exception if the user does not exist
         raise HTTPException(status_code=404, detail="User not found")
