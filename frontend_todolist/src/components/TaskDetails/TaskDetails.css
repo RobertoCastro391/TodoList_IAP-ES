@@ -50,26 +50,96 @@
   background-color: #f9f9f9;
 }
 
+.status-badge {
+  display: inline-flex;
+  height: 30px;
+  align-items: center;
+  padding: 8px 12px;
+  font-weight: bold;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: #fff;
+  gap: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.status-badge:hover {
+  transform: scale(1.05);
+}
+
+.status-badge.pending {
+  background-color: #ffb74d;
+}
+
+.status-badge.in-progress {
+  background-color: #64b5f6;
+}
+
+.status-badge.completed {
+  background-color: #81c784;
+}
+
+.edit-icon {
+  margin-left: 10px;
+  color: #333;
+}
+
+.status-edit-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .status-dropdown {
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  margin-top: 10px;
   font-size: 1rem;
 }
 
-.update-status-button {
-  padding: 10px 20px;
+.save-status-button {
+  padding: 8px 16px;
   border: none;
   border-radius: 5px;
   background-color: #4caf50;
   color: #fff;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-.update-status-button:hover {
+.save-status-button:hover {
   background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.cancel-status-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f44336;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.cancel-status-button:hover {
+  background-color: #e53935;
+  transform: scale(1.05);
+}
+
+.timestamp-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.timestamp-icon {
+  color: #64b5f6;
 }

@@ -19,3 +19,12 @@ class TaskRead(TaskCreate):
     user: UserRead
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class TaskUpdate(BaseModel):
+    task_id: int
+    title: Optional[str] = None
+    description: Optional[str] = None
+    deadline: Optional[datetime] = None
+    priority: Optional[Priority] = None
+    status: Optional[Status] = None

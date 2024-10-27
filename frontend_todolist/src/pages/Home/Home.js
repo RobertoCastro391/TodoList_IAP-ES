@@ -8,6 +8,33 @@ import TaskDetails from "../../components/TaskDetails/TaskDetails";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
+// Success Notification
+export const showSuccessNotification = (message) => {
+  toast.success(message, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+// Error Notification
+export const showErrorNotification = (message) => {
+  toast.error(message, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
 const Home = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [tasks, setTasks] = useState([]);
@@ -21,6 +48,13 @@ const Home = () => {
       setIsSignedIn(true);
     }
   }, []);
+
+  // Fetch tasks when the component loads and the user is signed in
+  useEffect(() => {
+    if (isSignedIn) {
+      fetchTasks();
+    }
+  }, [isSignedIn]);
 
   // Function to retrieve tasks from backend
   const fetchTasks = async () => {
@@ -36,24 +70,9 @@ const Home = () => {
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
-      toast.error("Failed to fetch tasks. Please try again.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      showErrorNotification("Failed to fetch tasks. Please try again.");
     }
   };
-
-  // Fetch tasks when the component loads and the user is signed in
-  useEffect(() => {
-    if (isSignedIn) {
-      fetchTasks();
-    }
-  }, [isSignedIn]);
 
   const handleAddTask = async (task) => {
     try {
@@ -74,28 +93,11 @@ const Home = () => {
       setTasks([...tasks, response.data]);
       
       // Show success notification
-      toast.success("Task added successfully!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      showSuccessNotification("Task added successfully!");
     } catch (error) {
       console.error("Error adding task:", error);
-      
       // Show error notification
-      toast.error("Failed to add task. Please try again.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      showErrorNotification("Failed to add task. Please try again.");
     }
   };
 
@@ -104,11 +106,32 @@ const Home = () => {
   };
 
   const handleUpdateTaskStatus = (taskToUpdate, newStatus) => {
-    const updatedTasks = tasks.map((task) =>
-      task === taskToUpdate ? { ...task, status: newStatus } : task
-    );
-    setTasks(updatedTasks);
-    setSelectedTask({ ...taskToUpdate, status: newStatus }); // Update selected task as well
+
+    const updatedTask = {
+      "task_id": taskToUpdate.id,
+      "status": newStatus
+    };
+
+    try {
+      // Send the updated task data to your backend
+      axios.put(`${API_URL}/tasks/updateStatus`, updatedTask);
+      
+      // Update the status of the task in the state
+      const updatedTasks = tasks.map((task) =>
+        task === taskToUpdate ? { ...task, status: newStatus } : task
+      );
+      setTasks(updatedTasks);
+      setSelectedTask({ ...taskToUpdate, status: newStatus }); // Update selected task as well
+
+      // Show success notification
+      showSuccessNotification("Task status updated successfully!");
+    }
+
+    catch (error) {
+      console.error("Error updating task status:", error);
+      // Show error notification
+      showErrorNotification("Failed to update task status. Please try again.");
+    }
   };
 
   return (

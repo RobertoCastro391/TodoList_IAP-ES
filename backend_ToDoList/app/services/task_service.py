@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import NoResultFound
 from fastapi import HTTPException
 from app.models.task import Task
-from app.schemas.task_schema import TaskCreate
+from app.schemas.task_schema import TaskCreate, TaskUpdate
 from datetime import datetime
 from app.models.user import User
 from app.models.enums import Priority, Status
@@ -51,3 +51,22 @@ def get_user_tasks(db: Session, user_id: int) -> list:
 
 def get_tasks(db: Session) -> list:
     return db.query(Task).options(joinedload(Task.user)).all()
+
+
+def update_task_status(db: Session, task_update: TaskUpdate) -> Task:
+    
+    # Find the task by id
+    task = db.query(Task).filter(Task.id == task_update.task_id).first()
+
+    if not task:
+        # If the task does not exist, raise an HTTP exception
+        raise HTTPException(status_code=404, detail="Task not found")
+    
+    # Update the task status
+    task.status = task_update.status
+    task.updated_at = datetime.now()
+    
+    db.commit()
+    db.refresh(task)
+
+    return task

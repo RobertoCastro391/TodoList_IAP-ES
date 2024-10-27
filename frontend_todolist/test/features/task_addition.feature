@@ -6,6 +6,5 @@ Feature: Task Addition
     And the user clicks on "Add New Task"
     And the user enters "Test Task" as the title
     And the user enters "This is a test task" as the description
-    And the user selects "Pending" as the status
     And the user clicks on the Add Task button
     Then the new task "Test Task" should appear in the task list
