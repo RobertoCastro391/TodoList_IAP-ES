@@ -14,6 +14,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = ({ isSignedIn, setIsSignedIn, name, email }) => {
+  const handleSignIn = () => {
+    // Set user_id to localStorage
+    localStorage.setItem("user_id", "2");
+    setIsSignedIn(true);
+  };
+
+  const handleSignOut = () => {
+    // Remove user_id from localStorage
+    localStorage.removeItem("user_id");
+    setIsSignedIn(false);
+  };
+
   return (
     <div className="sidebar">
       {isSignedIn ? (
@@ -50,7 +62,7 @@ const Sidebar = ({ isSignedIn, setIsSignedIn, name, email }) => {
               </li>
             </ul>
           </nav>
-          <div className="logout-section" onClick={() => setIsSignedIn(false)}>
+          <div className="logout-section" onClick={handleSignOut}>
             <FontAwesomeIcon icon={faSignOutAlt} className="icon" />
             Logout
           </div>
@@ -60,7 +72,7 @@ const Sidebar = ({ isSignedIn, setIsSignedIn, name, email }) => {
           <h3>Welcome!</h3>
           <p>Please sign in to access your dashboard.</p>
           <ul>
-            <li onClick={() => setIsSignedIn(true)} id="login_button">
+            <li onClick={handleSignIn} id="login_button">
               <FontAwesomeIcon icon={faSignInAlt} className="icon" />
               Login
             </li>
