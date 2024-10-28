@@ -1,70 +1,102 @@
-# Getting Started with Create React App
+### 26/10/2024 - 14:00
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TDLIE-30: Create the UI Component for Task Creation in React
 
-## Available Scripts
+## Overview
+The objective of this task was to create a UI component that allows users to add tasks. This component is implemented using React.
 
-In the project directory, you can run:
+## Implementation Details
 
-### `npm start`
+* **Component Name**: `AddTask`
+* **File Location**: `src/components/AddTask.js`
+* **Dependencies**: Utilizes React's state management (`useState`) and custom styling (`AddTask.css`).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features Implemented
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* **Modal for Adding a Task**: The component opens a modal when the user clicks the "Add New Task" button. This modal allows users to input the details of the new task.
+* **State Management**: Managed with `useState` to handle input fields such as title, description, deadline, and task status.
+* **Form Fields**: Users can input the task title, description, select a status (Pending, In Progress, Done), and set a deadline.
+* **Form Validation**: Ensures the task title is not empty before submitting.
+* **Adding a Task**: The `handleAddTask` function is called to submit the task details, and it invokes the `onAddTask` callback passed as a prop to handle the addition of the task.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 27/10/2024 - 00:30
 
-### `npm run build`
+# TDLIE-31: Integrate API and UI (React form submits to FastAPI)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Overview
+The objective of this task was to integrate call from the UI to the FastAPI endpoints to create tha task and save it to the DB.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 27/10/2024 - 19:30
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# TDLIE-33: Update the UI to Allow Marking Tasks as Complete (React)
 
-### `npm run eject`
+## Overview
+This task focused on updating the UI to provide a mechanism for users to update task status. This feature is implemented using React and integrates with the existing backend API to update the task status.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## UI Details
+- **Component Updated**: `TaskDetails` and `TaskList`
+- **Interaction Flow**: 
+    - Users can click on the task status field to enable editing.
+    - The status can be changed through a dropdown, followed by clicking the "Save" button to confirm the status update.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Implementation Details
+- **Task Details Component (`TaskDetails`)**:
+    - Added an edit mode for task status.
+    - Introduced a dropdown menu for selecting different statuses (`Pending`, `In Progress`, `Completed`).
+    - A _Save_ button is provided to save changes, and a _Cancel_ button allows users to discard changes.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **Task List Component (`TaskList`)**:
+    - Displays tasks in a list format, allowing users to click on a task to view and edit details.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Testing 
+- **E2E Tests**:
+    - Updated the existing Cucumber tests to validate the new functionality.
+    - Tests cover scenarios for changing the status of a task, including saving and cancelling changes.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 28/10/2024 - 17:00
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# TDLIE-35: Update the UI for Supporting Edit/Delete Tasks (React)
 
-### Code Splitting
+## Overview
+This task focused on updating the UI to provide mechanisms for users to edit or delete tasks.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## UI Details
+- **Components Updated**: `TaskDetails`
+- **Interaction Flow**:
+  - Users can click on the edit button to enable editing of task details, including title and description.
+  - Users can click on the delete button to trigger a confirmation alert before the task is deleted.
+  - Once confirmed, the task is removed from the UI and the backend API is called to delete the task.
 
-### Analyzing the Bundle Size
+## Implementation Details
+- **Task Details Component (`TaskDetails`)**:
+  - Added an edit mode for task details (title and description).
+  - Provided _Save_ and _Cancel_ buttons to either save the changes or discard them.
+  - Added a delete button that triggers a confirmation alert before deleting the task.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Testing 
+- **E2E Tests**:
+  - Updated the existing Cucumber tests to validate the new edit and delete functionalities.
+  - Tests cover scenarios for editing task detailsa and saving changes and deleting a task after confirming the action.
 
-### Making a Progressive Web App
+### 28/10/2024 - 19:15
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+# TDLIE-37: Update the UI to allow setting deadlines (React)
 
-### Advanced Configuration
+## Overview
+This task was for implementing in the UI a mechanism for enabling users to set deadlines for tasks.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## UI Details
+- **Components Updated**: `TaskDetails`
+- **Interaction Flow**:
+  - Users can click on the deadline fiels to enable editing of the deadline.
 
-### Deployment
+## Implementation Details
+- **Task Details Component (`TaskDetails`)**:
+  - Added an edit mode for the deadline field activated when clicked.
+  - Provided _Save_ and _Cancel_ buttons to either save the changes or discard them.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Testing 
+- **E2E Tests**:
+  - Updated the existing Cucumber tests to validate the deadline input and save.
