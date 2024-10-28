@@ -126,6 +126,30 @@ Then("the task title should be updated to {string}", async function (updatedTitl
   expect(text).to.include(updatedTitle);
 });
 
+// When("the user clicks on the deadline field", async function() {
+//   const deadline = await driver.findElement(By.id("deadlineField"));
+//   await deadline.click();
+// })
+
+// When("the user enters {string} as the deadline", async function (deadlineText) {
+//   const deadlineInput = await driver.findElement(By.id("editDeadline"));
+//   await deadlineInput.clear();
+//   await deadlineInput.sendKeys(deadlineText);
+// });
+
+// When("the user clicks on the Save Deadline button", async function () {
+//   const saveButton = await driver.findElement(By.id("saveDeadline"));
+//   await saveButton.click();
+// });
+
+// Then("the task deadline should be updated to {string}", async function (deadlineText) {
+//   const { expect } = chai;
+//   await driver.wait(until.elementLocated(By.id("deadlineField"), 5000));
+//   const task = await driver.findElement(By.id("deadlineField"));
+//   text = await task.getText();
+//   expect(text).to.include(deadlineText);
+// });
+
 When("the user clicks on the {string} button to delete the task", async function (buttonText) {
   const button = await driver.findElement(By.className("button delete"));
   await button.click();

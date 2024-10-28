@@ -76,13 +76,14 @@ const TaskDetails = ({ task, onUpdateTaskStatus, onDeleteTask, onUpdateTaskDetai
               value={updatedDeadline ? updatedDeadline : ""}
               onChange={(e) => setUpdatedDeadline(e.target.value)}
               className="edit-input"
+              id='editDeadline'
             />
           ) : (
-            <p className='deadline' onClick={() => setIsEditingDeadLine(true)}>{task.deadline ? new Date(task.deadline).toLocaleString() : "No deadline"}</p>
+            <p className='deadline' id="deadlineField" onClick={() => setIsEditingDeadLine(true)}>{task.deadline ? new Date(task.deadline).toLocaleString() : "No deadline"}</p>
           )}
           {isEditingDeadLine && (
             <div className="buttons">
-              <button className="status-button save" onClick={handleSaveDeadline}>Save Deadline</button>
+              <button className="status-button save" id="saveDeadline" onClick={handleSaveDeadline}>Save Deadline</button>
               <button className="status-button cancel" onClick={() => setIsEditingDeadLine(false)}>Cancel</button>
             </div>
           )}

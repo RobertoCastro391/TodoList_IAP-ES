@@ -107,7 +107,7 @@ def put_deadline_on_task(db: Session, task_update: TaskUpdate):
     return task
 
 def get_task_by_id(db: Session, task_id: int) -> Task:
-    task = db.query(Task).filter(Task.id == task_id).first()
+    task = db.query(Task).options(joinedload(Task.user)).filter(Task.id == task_id).first()
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
     return task
