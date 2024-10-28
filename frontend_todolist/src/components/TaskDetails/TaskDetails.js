@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import './TaskDetails.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle, faSpinner, faCheckCircle, faPlayCircle, faEdit, faCalendarAlt, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle, faSpinner, faCheckCircle, faPlayCircle, faEdit, faCalendarAlt, faSyncAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const TaskDetails = ({ task, onUpdateTaskStatus }) => {
+const TaskDetails = ({ task, onUpdateTaskStatus, onDeleteTask, onUpdateTaskDetails }) => {
   const [newStatus, setNewStatus] = useState(task.status);
   const [isEditingStatus, setIsEditingStatus] = useState(false);
+  const [isEditingDetails, setIsEditingDetails] = useState(false);
+  const [updatedTitle, setUpdatedTitle] = useState(task.title);
+  const [updatedDescription, setUpdatedDescription] = useState(task.description);
 
   const handleStatusChange = () => {
     if (newStatus && newStatus !== task.status) {
@@ -14,17 +17,47 @@ const TaskDetails = ({ task, onUpdateTaskStatus }) => {
     }
   };
 
+  const handleDeleteClick = () => {
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      onDeleteTask(task);
+    }
+  };
+
+  const handleSaveDetails = () => {
+    onUpdateTaskDetails(task, updatedTitle, updatedDescription);
+    setIsEditingDetails(false);
+  };
+
   return (
     <div className="task-details-card">
       <h3><FontAwesomeIcon icon={faInfoCircle} /> Task Details</h3>
       <div className="task-details-content">
         <div className="task-detail">
           <label>Title:</label>
-          <p>{task.title}</p>
+          {isEditingDetails ? (
+            <input
+              type="text"
+              id='editTitle'
+              value={updatedTitle}
+              onChange={(e) => setUpdatedTitle(e.target.value)}
+              className="edit-input"
+            />
+          ) : (
+            <p>{task.title}</p>
+          )}
         </div>
         <div className="task-detail">
           <label>Description:</label>
-          <p>{task.description}</p>
+          {isEditingDetails ? (
+            <textarea
+              value={updatedDescription}
+              id='editDescription'
+              onChange={(e) => setUpdatedDescription(e.target.value)}
+              className="edit-textarea"
+            />
+          ) : (
+            <p>{task.description}</p>
+          )}
         </div>
         <div className="task-detail">
           <label>Status:</label>
@@ -39,10 +72,10 @@ const TaskDetails = ({ task, onUpdateTaskStatus }) => {
                 <option value="In Progress" id="In Progress">In Progress</option>
                 <option value="Completed" id="Completed">Completed</option>
               </select>
-              <button className="save-status-button" onClick={handleStatusChange}>
+              <button className="status-button save" id='saveStatusBtn' onClick={handleStatusChange}>
                 Save
               </button>
-              <button className="cancel-status-button" onClick={() => setIsEditingStatus(false)}>
+              <button className="status-button cancel" onClick={() => setIsEditingStatus(false)}>
                 Cancel
               </button>
             </div>
@@ -59,19 +92,38 @@ const TaskDetails = ({ task, onUpdateTaskStatus }) => {
             </div>
           )}
         </div>
-        <div className="task-detail">
-          <label>Created At:</label>
-          <div className="timestamp-container">
-            <FontAwesomeIcon icon={faCalendarAlt} className="timestamp-icon" />
-            <span>{new Date(task.created_at).toLocaleString()}</span>
+        <div className="task-detail time">
+          <div>
+            <label>Created At:</label>
+            <div className="timestamp-container">
+              <FontAwesomeIcon icon={faCalendarAlt} className="timestamp-icon" />
+              <span>{new Date(task.created_at).toLocaleString()}</span>
+            </div>
+          </div>
+          <div>
+            <label>Updated At:</label>
+            <div className="timestamp-container">
+              <FontAwesomeIcon icon={faSyncAlt} className="timestamp-icon" />
+              <span>{new Date(task.updated_at).toLocaleString()}</span>
+            </div>
           </div>
         </div>
-        <div className="task-detail">
-          <label>Updated At:</label>
-          <div className="timestamp-container">
-            <FontAwesomeIcon icon={faSyncAlt} className="timestamp-icon" />
-            <span>{new Date(task.updated_at).toLocaleString()}</span>
-          </div>
+        <div className="task-detail time">
+          {isEditingDetails ? (
+            <>
+              <button className="status-button save" onClick={handleSaveDetails}>Save Changes</button>
+              <button className="status-button cancel" onClick={() => setIsEditingDetails(false)}>Cancel</button>
+            </>
+          ) : (
+            <>
+              <button className="button edit" onClick={() => setIsEditingDetails(true)}>
+                <FontAwesomeIcon icon={faEdit} /> Edit Details
+              </button>
+              <button className="button delete" onClick={() => handleDeleteClick(task)}>
+                <FontAwesomeIcon icon={faTrash} /> Delete this task
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

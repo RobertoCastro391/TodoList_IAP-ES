@@ -108,3 +108,41 @@ This task make part of the user story that focuses on implementing the API endpo
 - **Unit Tests**: Added unit tests to validate the functionality of the endpoint, covering successful status updates and failure scenarios, such as when the task does not exist or when an invalid status value is provided.
 
 - **Exception Handling Test**: Simulated error cases using ?`unittest.mock.patch` to validate that the endpoint correctly handles exceptions and returns suitable error messages.
+
+### 28-10-2024 - 12H00
+
+# TDLIE-34: Implement Edit and Delete Task API Endpoints
+
+## Overview 
+This task involves implementing the API endpoints to allow editing and deleting tasks.
+
+## Endpoint Details
+  ### Edit Task Endpoint
+  - **Endpoint:** `/api/tasks/editTask`
+  - **HTTP Method:** PUT
+  - **Description:** This endpoint allows users to edit a task by providing the atributes to modify.
+  - **Input Schema:** `TaskUpdate`
+    - `task_id`: The *ID* of the task (required).
+    - `title`: The new task title (optional). 
+    - `description`: The description of the task (optional).
+    - `deadline`: The deadline date and time for the task (optional).
+    - `priority`: Priority level of the task (optional).
+    - `status`: Status of the task (optional).
+
+  ### Delete Task Endpoint
+  - **Endpoint:** `/api/tasks/deleteTask`
+  - **HTTP Method:** DELETE
+  - **Description:** This endpoint allows users to delete a task by providing the task id of the task.
+  - **Input Schema:** `TaskUpdate`
+    - `task_id`: The *ID* of the task (required).
+
+## Implementation Details
+  - **Endpoints Implemented**: 
+    - **Edit Task Endpoint** (`PUT /api/tasks/editTask`): Allows the user to edit task details.
+    - **Delete Task Endpoint** (`DELETE /api/tasks/deleteTask`):llows the user to delete a specific task by providing its ID.
+  - **Database Interaction**:
+    - **Edit Task**: The `update_task` function in `task_service.py` uses the TaskUpdate schema to validate input data. It verifies that the provided task_id exists, updates the relevant fields (title, description, deadline, priority, status), and refreshes the updated_at timestamp before committing the changes.
+    - **Delete Task**: The `delete_task` function in `task_service.py` checks for the existence of the task by its ID, deletes it from the database, and commits the changes.
+  - **Exepction Handling**:
+    - Both endpoints include error handling to return a `404 Not Fund` if the task to update or delete does not exit in the database.
+    - The `update_task` function also includes validation to ensure that all fields being updated are valid.

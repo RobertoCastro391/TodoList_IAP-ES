@@ -53,3 +53,29 @@ This task focused on updating the UI to provide a mechanism for users to update 
 - **E2E Tests**:
     - Updated the existing Cucumber tests to validate the new functionality.
     - Tests cover scenarios for changing the status of a task, including saving and cancelling changes.
+
+
+### 28/10/2024 - 17:00
+
+# TDLIE-35: Update the UI for Supporting Edit/Delete Tasks (React)
+
+## Overview
+This task focused on updating the UI to provide mechanisms for users to edit or delete tasks.
+
+## UI Details
+- **Components Updated**: `TaskDetails`
+- **Interaction Flow**:
+  - Users can click on the edit button to enable editing of task details, including title and description.
+  - Users can click on the delete button to trigger a confirmation alert before the task is deleted.
+  - Once confirmed, the task is removed from the UI and the backend API is called to delete the task.
+
+## Implementation Details
+- **Task Details Component (`TaskDetails`)**:
+  - Added an edit mode for task details (title and description).
+  - Provided _Save_ and _Cancel_ buttons to either save the changes or discard them.
+  - Added a delete button that triggers a confirmation alert before deleting the task.
+
+## Testing 
+- **E2E Tests**:
+  - Updated the existing Cucumber tests to validate the new edit and delete functionalities.
+  - Tests cover scenarios for editing task detailsa and saving changes and deleting a task after confirming the action.

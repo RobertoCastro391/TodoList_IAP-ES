@@ -28,6 +28,16 @@ def read_user_tasks(user_id: int, db: Session = Depends(get_db)):
 def update_task_status(task_update: TaskUpdate, db: Session = Depends(get_db)):
     task = task_service.update_task_status(db=db, task_update=task_update)
     return task
+
+@router.put("/editTask", response_model=TaskRead)
+def update_task(task_update: TaskUpdate, db: Session = Depends(get_db)):
+    task = task_service.update_task(db=db, task_update=task_update)
+    return task
+
+@router.delete("/deleteTask", response_model=TaskRead)
+def delete_task(task_id: int, db: Session = Depends(get_db)):
+    task = task_service.delete_task(db=db, task_id=task_id)
+    return task
     
 @router.get("/", response_model=List[TaskRead])
 def read_tasks(db: Session = Depends(get_db)):
