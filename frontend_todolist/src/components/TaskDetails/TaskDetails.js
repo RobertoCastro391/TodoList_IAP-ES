@@ -37,6 +37,7 @@ const TaskDetails = ({ task, onUpdateTaskStatus, onDeleteTask, onUpdateTaskDetai
           {isEditingDetails ? (
             <input
               type="text"
+              id='editTitle'
               value={updatedTitle}
               onChange={(e) => setUpdatedTitle(e.target.value)}
               className="edit-input"
@@ -50,6 +51,7 @@ const TaskDetails = ({ task, onUpdateTaskStatus, onDeleteTask, onUpdateTaskDetai
           {isEditingDetails ? (
             <textarea
               value={updatedDescription}
+              id='editDescription'
               onChange={(e) => setUpdatedDescription(e.target.value)}
               className="edit-textarea"
             />
@@ -70,7 +72,7 @@ const TaskDetails = ({ task, onUpdateTaskStatus, onDeleteTask, onUpdateTaskDetai
                 <option value="In Progress" id="In Progress">In Progress</option>
                 <option value="Completed" id="Completed">Completed</option>
               </select>
-              <button className="status-button save" onClick={handleStatusChange}>
+              <button className="status-button save" id='saveStatusBtn' onClick={handleStatusChange}>
                 Save
               </button>
               <button className="status-button cancel" onClick={() => setIsEditingStatus(false)}>
