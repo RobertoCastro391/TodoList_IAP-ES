@@ -5,6 +5,7 @@ import {
   updateTaskStatus,
   updateTaskDetails,
   deleteTask,
+  setDeadline,
 } from "../services/taskService";
 import { showSuccessNotification, showErrorNotification } from "../utils/notifications";
 
@@ -102,6 +103,26 @@ export const useTasks = (isSignedIn) => {
     }
   };
 
+  const handleUpdateDeadline = async (taskToUpdate, updatedDeadline) => {
+    const updatedTask = {
+      task_id: taskToUpdate.id,
+      deadline: updatedDeadline,
+    };
+
+    try {
+      await setDeadline(updatedTask);
+      const updatedTasks = tasks.map((task) =>
+        task.id === taskToUpdate.id ? { ...task, deadline: updatedDeadline } : task
+      );
+      setTasks(updatedTasks);
+      setSelectedTask({ ...taskToUpdate, deadline: updatedDeadline });
+      showSuccessNotification("Task deadline updated successfully!");
+    } catch (error) {
+      console.error("Error updating task deadline:", error);
+      showErrorNotification("Failed to update task deadline. Please try again.");
+    }
+  };
+
   return {
     tasks,
     selectedTask,
@@ -110,5 +131,6 @@ export const useTasks = (isSignedIn) => {
     handleUpdateTaskDetails,
     handleDeleteTask,
     setSelectedTask,
+    handleUpdateDeadline,
   };
 };

@@ -146,3 +146,34 @@ This task involves implementing the API endpoints to allow editing and deleting 
   - **Exepction Handling**:
     - Both endpoints include error handling to return a `404 Not Fund` if the task to update or delete does not exit in the database.
     - The `update_task` function also includes validation to ensure that all fields being updated are valid.
+
+### 28-10-2024 - 18H15
+
+# TDLIE-36: Implement Deadline Assignment API Endpoint
+
+## Overview
+This task focused on implementing an API endpoint to assign deadlines to tasks. This allows users to set due dates for tasks, which are stored and updated in the database to assist in managing deadlines effectively.
+
+## Enpoint Implementation
+- **Endpoint:** `/api/tasks/deadline`
+  - **HTTP Method:** PUT
+  - **Description:** This endpoint allows users to assign a deadline to a task.
+  - **Input Schema:** `TaskUpdate`
+    - `task_id`: The *ID* of the task (required).
+    - `title`: The new task title (optional). 
+    - `description`: The description of the task (optional).
+    - `deadline`: The deadline date and time for the task (optional).
+    - `priority`: Priority level of the task (optional).
+    - `status`: Status of the task (optional).
+  - **Database Update**: Updates the `deadline` and `updated_at` fields of the specified task in the database.
+  - **Error Handling**:
+    - Returns a `404 Not Found` if the task with the given `task_id` does not exist.
+
+## Implementation Details
+- **Router (`task_router.py`)**:
+  - Added a new route `@router.put("/deadline")` to handle updating the deadline of a task.
+  - The route takes `task_update` of type `TaskUpdate` and uses the `put_deadline_on_task` function from the task service.
+
+- **Service (`task_service.py`)**:
+  - Implemented the `put_deadline_on_task` function to update the `deadline` and `updated_at` fields of the task.
+  - Utilizes the `get_task_by_id` helper function to locate the task before updating.

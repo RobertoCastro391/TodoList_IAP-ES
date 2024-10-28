@@ -79,3 +79,24 @@ This task focused on updating the UI to provide mechanisms for users to edit or 
 - **E2E Tests**:
   - Updated the existing Cucumber tests to validate the new edit and delete functionalities.
   - Tests cover scenarios for editing task detailsa and saving changes and deleting a task after confirming the action.
+
+### 28/10/2024 - 19:15
+
+# TDLIE-37: Update the UI to allow setting deadlines (React)
+
+## Overview
+This task was for implementing in the UI a mechanism for enabling users to set deadlines for tasks.
+
+## UI Details
+- **Components Updated**: `TaskDetails`
+- **Interaction Flow**:
+  - Users can click on the deadline fiels to enable editing of the deadline.
+
+## Implementation Details
+- **Task Details Component (`TaskDetails`)**:
+  - Added an edit mode for the deadline field activated when clicked.
+  - Provided _Save_ and _Cancel_ buttons to either save the changes or discard them.
+
+## Testing 
+- **E2E Tests**:
+  - Updated the existing Cucumber tests to validate the deadline input and save.
