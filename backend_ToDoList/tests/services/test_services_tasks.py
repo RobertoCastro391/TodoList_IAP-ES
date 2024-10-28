@@ -230,3 +230,27 @@ def test_delete_task_not_found(db_session):
         task_service.delete_task(db_session, 999)
     assert exc_info.value.status_code == 404
     assert exc_info.value.detail == "Task not found"
+
+def test_set_task_deadline(db_session):
+            
+        user_id = 1
+        
+        task_create = TaskCreate(
+            title="Test Task",
+            description="This is a test task",
+            deadline=datetime.now(),
+            priority=Priority.HIGH,
+            status=Status.PENDING,
+            user_id=user_id
+        )
+        
+        task = task_service.create_task(db_session, task_create)
+        
+        put_deadline_on_task = TaskUpdate(
+            task_id=task.id,
+            deadline=datetime(2021, 12, 31, 23, 59, 59)
+        )
+
+        task_service.put_deadline_on_task(db_session, put_deadline_on_task)
+    
+        assert task.deadline == datetime(2021, 12, 31, 23, 59, 59)

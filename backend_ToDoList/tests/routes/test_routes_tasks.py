@@ -180,3 +180,24 @@ def test_delete_task(client):
 
         # Validate task fields
         assert data["id"] == 1
+
+def test_update_task_deadline(client):
+        
+        requested_task = {
+            "task_id": 1,
+            "deadline": "2021-12-31T23:59:59"
+        }
+    
+        # Patch the 'get_tasks' function to return the mocked task
+        with patch('app.routes.task_routes.task_service.put_deadline_on_task') as mock_update_task_deadline:
+            mock_update_task_deadline.return_value = mocked_task
+    
+            # Act
+            response = client.put("/api/tasks/deadline", json=requested_task)
+    
+            # Assert
+            assert response.status_code == 200
+            data = response.json()
+    
+            # Validate task fields
+            assert data["deadline"] == "2021-12-31T23:59:59"
