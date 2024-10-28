@@ -23,3 +23,7 @@ export const updateTaskDetails = async (updatedTask) => {
 export const deleteTask = async (taskId) => {
   return axios.delete(`${API_URL}/tasks/deleteTask`, { params: taskId });
 };
+
+export const setDeadline = async (deadlineData) => {
+  return axios.put(`${API_URL}/tasks/deadline`, deadlineData);
+};

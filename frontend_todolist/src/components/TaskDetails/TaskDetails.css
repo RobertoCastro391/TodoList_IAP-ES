@@ -41,6 +41,19 @@
   gap: 10px;
 }
 
+.task-detail.deadline {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.task-detail.deadline .buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
 .task-detail label {
   font-weight: bold;
   font-size: 1.1rem;
@@ -176,4 +189,8 @@
 
 .timestamp-icon {
   color: #64b5f6;
+}
+
+.deadline p:hover {
+  transform: scale(1.05);
 }

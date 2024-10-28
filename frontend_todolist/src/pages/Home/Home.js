@@ -19,6 +19,7 @@ const Home = () => {
     handleUpdateTaskDetails,
     handleDeleteTask,
     setSelectedTask,
+    handleUpdateDeadline,
   } = useTasks(isSignedIn);
 
   return (
@@ -46,6 +47,7 @@ const Home = () => {
                 onUpdateTaskStatus={handleUpdateTaskStatus}
                 onDeleteTask={handleDeleteTask}
                 onUpdateTaskDetails={handleUpdateTaskDetails}
+                onUpdateDeadline={handleUpdateDeadline}
               />
             )}
           </div>
