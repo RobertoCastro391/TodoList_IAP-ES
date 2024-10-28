@@ -3,12 +3,14 @@ import './TaskDetails.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle, faSpinner, faCheckCircle, faPlayCircle, faEdit, faCalendarAlt, faSyncAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const TaskDetails = ({ task, onUpdateTaskStatus, onDeleteTask, onUpdateTaskDetails }) => {
+const TaskDetails = ({ task, onUpdateTaskStatus, onDeleteTask, onUpdateTaskDetails, onUpdateDeadline }) => {
   const [newStatus, setNewStatus] = useState(task.status);
   const [isEditingStatus, setIsEditingStatus] = useState(false);
   const [isEditingDetails, setIsEditingDetails] = useState(false);
+  const [isEditingDeadLine, setIsEditingDeadLine] = useState(false);
   const [updatedTitle, setUpdatedTitle] = useState(task.title);
   const [updatedDescription, setUpdatedDescription] = useState(task.description);
+  const [updatedDeadline, setUpdatedDeadline] = useState(task.deadline);
 
   const handleStatusChange = () => {
     if (newStatus && newStatus !== task.status) {
@@ -26,6 +28,13 @@ const TaskDetails = ({ task, onUpdateTaskStatus, onDeleteTask, onUpdateTaskDetai
   const handleSaveDetails = () => {
     onUpdateTaskDetails(task, updatedTitle, updatedDescription);
     setIsEditingDetails(false);
+  };
+
+  const handleSaveDeadline = () => {
+    if (updatedDeadline && updatedDeadline !== task.deadline) {
+      onUpdateDeadline(task, updatedDeadline);
+      setIsEditingDeadLine(false);
+    }
   };
 
   return (
@@ -57,6 +66,25 @@ const TaskDetails = ({ task, onUpdateTaskStatus, onDeleteTask, onUpdateTaskDetai
             />
           ) : (
             <p>{task.description}</p>
+          )}
+        </div>
+        <div className="task-detail deadline">
+          <label>Deadline:</label>
+          {isEditingDeadLine ? (
+            <input
+              type="datetime-local"
+              value={updatedDeadline ? updatedDeadline : ""}
+              onChange={(e) => setUpdatedDeadline(e.target.value)}
+              className="edit-input"
+            />
+          ) : (
+            <p className='deadline' onClick={() => setIsEditingDeadLine(true)}>{task.deadline ? new Date(task.deadline).toLocaleString() : "No deadline"}</p>
+          )}
+          {isEditingDeadLine && (
+            <div className="buttons">
+              <button className="status-button save" onClick={handleSaveDeadline}>Save Deadline</button>
+              <button className="status-button cancel" onClick={() => setIsEditingDeadLine(false)}>Cancel</button>
+            </div>
           )}
         </div>
         <div className="task-detail">
