@@ -82,6 +82,8 @@ This task focused on updating the UI to provide mechanisms for users to edit or 
 
 ### 28/10/2024 - 19:15
 
+# TDLIE-37: Update the UI to allow setting deadlines (React)
+
 ## Overview
 This task was for implementing in the UI a mechanism for enabling users to set deadlines for tasks.
 
