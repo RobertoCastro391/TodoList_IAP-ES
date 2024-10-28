@@ -144,13 +144,89 @@ def test_change_status_task_success(db_session):
 
 def test_change_status_task_not_found(db_session):
     
-        task_update = TaskUpdate(
-            task_id=999,
-            status=Status.COMPLETED
-        )
-    
-        with pytest.raises(HTTPException) as exc_info:
-            task_service.update_task_status(db_session, task_update)
-        assert exc_info.value.status_code == 404
-        assert exc_info.value.detail == "Task not found"
+    task_update = TaskUpdate(
+        task_id=999,
+        status=Status.COMPLETED
+    )
+
+    with pytest.raises(HTTPException) as exc_info:
+        task_service.update_task_status(db_session, task_update)
+    assert exc_info.value.status_code == 404
+    assert exc_info.value.detail == "Task not found"
         
+def test_edit_task(db_session):
+        
+    user_id = 1
+    
+    task_create = TaskCreate(
+        title="Test Task",
+        description="This is a test task",
+        deadline=datetime.now(),
+        priority=Priority.HIGH,
+        status=Status.PENDING,
+        user_id=user_id
+    )
+
+    task = task_service.create_task(db_session, task_create)
+
+    task_update = TaskUpdate(
+        task_id=task.id,
+        title="Test Task Edited",
+        description="This is a test task edited",
+        deadline=datetime(2021, 12, 31, 23, 59, 59),
+        priority=Priority.LOW,
+        status=Status.COMPLETED
+    )
+
+    task = task_service.update_task(db_session, task_update)
+
+    assert task.title == "Test Task Edited"
+    assert task.description == "This is a test task edited"
+    assert task.deadline == datetime(2021, 12, 31, 23, 59, 59)
+    assert task.priority == Priority.LOW
+    assert task.status == Status.COMPLETED
+
+def test_edit_task_not_found(db_session):
+        
+    task_update = TaskUpdate(
+        task_id=999,
+        title="Test Task Edited",
+        description="This is a test task edited",
+        deadline=datetime(2021, 12, 31, 23, 59, 59),
+        priority=Priority.LOW,
+        status=Status.COMPLETED
+    )
+    
+    with pytest.raises(HTTPException) as exc_info:
+        task_service.update_task(db_session, task_update)
+    assert exc_info.value.status_code == 404
+    assert exc_info.value.detail == "Task not found"
+
+def test_delete_task(db_session):
+        
+    user_id = 1
+    
+    task_create = TaskCreate(
+        title="Test Task",
+        description="This is a test task",
+        deadline=datetime.now(),
+        priority=Priority.HIGH,
+        status=Status.PENDING,
+        user_id=user_id
+    )
+
+    task = task_service.create_task(db_session, task_create)
+
+    task_service.delete_task(db_session, task.id)
+
+    with pytest.raises(HTTPException) as exc_info:
+        task_service.delete_task(db_session, task.id)
+    assert exc_info.value.status_code == 404
+    assert exc_info.value.detail == "Task not found"
+
+def test_delete_task_not_found(db_session):
+        
+    with pytest.raises(HTTPException) as exc_info:
+        task_service.delete_task(db_session, 999)
+    assert exc_info.value.status_code == 404
+    assert exc_info.value.detail == "Task not found"

@@ -26,5 +26,5 @@ class TaskUpdate(BaseModel):
     title: Optional[str] = None
     description: Optional[str] = None
     deadline: Optional[datetime] = None
-    priority: Optional[Priority] = None
-    status: Optional[Status] = None
+    priority: Optional[Priority] = Priority.MEDIUM
+    status: Optional[Status] = Status.PENDING

@@ -70,3 +70,37 @@ def update_task_status(db: Session, task_update: TaskUpdate) -> Task:
     db.refresh(task)
 
     return task
+
+def update_task(db: Session, task_update: TaskUpdate) -> Task:
+    # Find the task by id
+    task = db.query(Task).filter(Task.id == task_update.task_id).first()
+
+    if not task:
+        # If the task does not exist, raise an HTTP exception
+        raise HTTPException(status_code=404, detail="Task not found")
+    
+    # Update the task
+    task.title = task_update.title if task_update.title is not None else task.title
+    task.description = task_update.description if task_update.description is not None else task.description
+    task.deadline = task_update.deadline if task_update.deadline is not None else task.deadline
+    task.priority = task_update.priority if task_update.priority is not None else task.priority
+    task.status = task_update.status if task_update.status is not None else task.status
+    task.updated_at = datetime.now()
+
+    db.commit()
+    db.refresh(task)
+
+    return task
+
+def delete_task(db: Session, task_id: int):
+    
+    task = db.query(Task).options(joinedload(Task.user)).filter(Task.id == task_id).first()
+
+    if not task:
+        # If the task does not exist, raise an HTTP exception
+        raise HTTPException(status_code=404, detail="Task not found")
+    
+    db.delete(task)
+    db.commit()
+
+    return task
