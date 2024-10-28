@@ -34,6 +34,13 @@
   flex-direction: column;
 }
 
+.task-detail.time {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 10px;
+}
+
 .task-detail label {
   font-weight: bold;
   font-size: 1.1rem;
@@ -128,6 +135,17 @@
 .cancel-status-button:hover {
   background-color: #e53935;
   transform: scale(1.05);
+}
+
+.delete-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f44336;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .timestamp-container {

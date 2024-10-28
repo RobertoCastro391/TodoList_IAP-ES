@@ -134,6 +134,32 @@ const Home = () => {
     }
   };
 
+  const handleDeleteTask = async (taskToDelete) => {
+    
+    const task_id = {
+      "task_id": taskToDelete.id
+    };
+
+    console.log(task_id);
+    
+    try {
+      // Send a request to delete the task from your backend
+      await axios.delete(`${API_URL}/tasks/deleteTask`, { params: task_id });
+      
+      // Remove the task from the state
+      const updatedTasks = tasks.filter((task) => task.id !== taskToDelete.id);
+      setTasks(updatedTasks);
+      setSelectedTask(null); // Clear the selected task
+
+      // Show success notification
+      showSuccessNotification("Task deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting task:", error);
+      // Show error notification
+      showErrorNotification("Failed to delete task. Please try again.");
+    }
+  };
+
   return (
     <div className="container_home">
       <div className="sidebar-container">
@@ -160,6 +186,7 @@ const Home = () => {
               <TaskDetails 
                 task={selectedTask} 
                 onUpdateTaskStatus={handleUpdateTaskStatus} 
+                onDeleteTask={handleDeleteTask}
               />
             )}
           </div>

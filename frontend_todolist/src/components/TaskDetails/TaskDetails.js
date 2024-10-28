@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './TaskDetails.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle, faSpinner, faCheckCircle, faPlayCircle, faEdit, faCalendarAlt, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle, faSpinner, faCheckCircle, faPlayCircle, faEdit, faCalendarAlt, faSyncAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const TaskDetails = ({ task, onUpdateTaskStatus }) => {
+const TaskDetails = ({ task, onUpdateTaskStatus, onDeleteTask }) => {
   const [newStatus, setNewStatus] = useState(task.status);
   const [isEditingStatus, setIsEditingStatus] = useState(false);
 
@@ -59,19 +59,26 @@ const TaskDetails = ({ task, onUpdateTaskStatus }) => {
             </div>
           )}
         </div>
-        <div className="task-detail">
-          <label>Created At:</label>
-          <div className="timestamp-container">
-            <FontAwesomeIcon icon={faCalendarAlt} className="timestamp-icon" />
-            <span>{new Date(task.created_at).toLocaleString()}</span>
+        <div className="task-detail time">
+          <div>
+            <label>Created At:</label>
+            <div className="timestamp-container">
+              <FontAwesomeIcon icon={faCalendarAlt} className="timestamp-icon" />
+              <span>{new Date(task.created_at).toLocaleString()}</span>
+            </div>
+          </div>
+          <div>
+            <label>Updated At:</label>
+            <div className="timestamp-container">
+              <FontAwesomeIcon icon={faSyncAlt} className="timestamp-icon" />
+              <span>{new Date(task.updated_at).toLocaleString()}</span>
+            </div>
           </div>
         </div>
-        <div className="task-detail">
-          <label>Updated At:</label>
-          <div className="timestamp-container">
-            <FontAwesomeIcon icon={faSyncAlt} className="timestamp-icon" />
-            <span>{new Date(task.updated_at).toLocaleString()}</span>
-          </div>
+        <div className="task-detail time">
+          <button className="delete-button" onClick={() => onDeleteTask(task)}>
+            <FontAwesomeIcon icon={faTrash} /> Delete this task
+          </button>
         </div>
       </div>
     </div>
