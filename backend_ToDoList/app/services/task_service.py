@@ -41,6 +41,7 @@ def create_task(db: Session, task_create: TaskCreate) -> Task:
     return task
 
 def get_user_tasks(db: Session, user_id: int) -> list:
+    
     # Find user by id
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
@@ -56,11 +57,7 @@ def get_tasks(db: Session) -> list:
 def update_task_status(db: Session, task_update: TaskUpdate) -> Task:
     
     # Find the task by id
-    task = db.query(Task).filter(Task.id == task_update.task_id).first()
-
-    if not task:
-        # If the task does not exist, raise an HTTP exception
-        raise HTTPException(status_code=404, detail="Task not found")
+    task = get_task_by_id(db=db, task_id=task_update.task_id)
     
     # Update the task status
     task.status = task_update.status
@@ -72,12 +69,8 @@ def update_task_status(db: Session, task_update: TaskUpdate) -> Task:
     return task
 
 def update_task(db: Session, task_update: TaskUpdate) -> Task:
-    # Find the task by id
-    task = db.query(Task).filter(Task.id == task_update.task_id).first()
-
-    if not task:
-        # If the task does not exist, raise an HTTP exception
-        raise HTTPException(status_code=404, detail="Task not found")
+    
+    task = get_task_by_id(db=db, task_id=task_update.task_id)
     
     # Update the task
     task.title = task_update.title if task_update.title is not None else task.title
@@ -94,13 +87,27 @@ def update_task(db: Session, task_update: TaskUpdate) -> Task:
 
 def delete_task(db: Session, task_id: int):
     
-    task = db.query(Task).options(joinedload(Task.user)).filter(Task.id == task_id).first()
+    task = get_task_by_id(db=db, task_id=task_id)
 
-    if not task:
-        # If the task does not exist, raise an HTTP exception
-        raise HTTPException(status_code=404, detail="Task not found")
-    
     db.delete(task)
     db.commit()
 
+    return task
+
+def put_deadline_on_task(db: Session, task_update: TaskUpdate):
+        
+    task = get_task_by_id(db=db, task_id=task_update.task_id)
+    
+    task.deadline = task_update.deadline
+    task.updated_at = datetime.now()
+
+    db.commit()
+    db.refresh(task)
+
+    return task
+
+def get_task_by_id(db: Session, task_id: int) -> Task:
+    task = db.query(Task).filter(Task.id == task_id).first()
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
     return task

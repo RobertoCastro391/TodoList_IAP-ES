@@ -38,6 +38,11 @@ def update_task(task_update: TaskUpdate, db: Session = Depends(get_db)):
 def delete_task(task_id: int, db: Session = Depends(get_db)):
     task = task_service.delete_task(db=db, task_id=task_id)
     return task
+
+@router.put("/deadline", response_model=TaskRead)
+def put_deadline_on_task(task_update: TaskUpdate, db: Session = Depends(get_db)):
+    task = task_service.put_deadline_on_task(db=db, task_update=task_update)
+    return task
     
 @router.get("/", response_model=List[TaskRead])
 def read_tasks(db: Session = Depends(get_db)):
