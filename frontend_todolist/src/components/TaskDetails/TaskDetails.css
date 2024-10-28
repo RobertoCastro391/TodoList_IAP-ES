@@ -34,6 +34,13 @@
   flex-direction: column;
 }
 
+.task-detail.time {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 10px;
+}
+
 .task-detail label {
   font-weight: bold;
   font-size: 1.1rem;
@@ -88,6 +95,7 @@
 .status-edit-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
 }
 
@@ -98,35 +106,61 @@
   font-size: 1rem;
 }
 
-.save-status-button {
+.status-button {
   padding: 8px 16px;
+  width: 35%;
   border: none;
   border-radius: 5px;
-  background-color: #4caf50;
   color: #fff;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.save-status-button:hover {
+.status-button.save {
+  background-color: #4caf50;
+}
+
+.status-button.cancel {
+  background-color: #f44336;
+}
+
+.status-button.save:hover {
   background-color: #45a049;
   transform: scale(1.05);
 }
 
-.cancel-status-button {
+.status-button.cancel:hover {
+  background-color: #e53935;
+  transform: scale(1.05);
+}
+
+.button {
   padding: 8px 16px;
+  width: 35%;
   border: none;
   border-radius: 5px;
-  background-color: #f44336;
   color: #fff;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.cancel-status-button:hover {
+.button.delete{
+  background-color: #f44336;
+}
+
+.button.edit{
+  background-color: #2196f3;
+}
+
+.button.delete:hover {
   background-color: #e53935;
+  transform: scale(1.05);
+}
+
+.button.edit:hover {
+  background-color: #1e88e5;
   transform: scale(1.05);
 }
 
