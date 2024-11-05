@@ -16,7 +16,7 @@ import {
 const Sidebar = ({ isSignedIn, setIsSignedIn, name, email }) => {
   const handleSignIn = () => {
     // Set user_id to localStorage
-    localStorage.setItem("user_id", "2");
+    localStorage.setItem("user_id", "1");
     setIsSignedIn(true);
   };
 
