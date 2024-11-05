@@ -177,3 +177,21 @@ This task focused on implementing an API endpoint to assign deadlines to tasks. 
 - **Service (`task_service.py`)**:
   - Implemented the `put_deadline_on_task` function to update the `deadline` and `updated_at` fields of the task.
   - Utilizes the `get_task_by_id` helper function to locate the task before updating.
+
+
+### 05/11/2024 - 15:30
+
+# TDLIE-55: Implement API Endpoint for login
+
+## Overview
+This task introduces several new authentication endpoints using AWS Cognito, including login, logout, and callback functionalities. It also includes enhancements to the token exchange and user management logic, alongside integrating user creation or retrieval based on Cognito IDs 
+
+## Enpoint Implementation
+- **/auth/login**: Redirects users to the AWS Cognito login page.
+- **/auth/logout**: Logs out users by redirecting them to Cognito’s logout page and removes the access token cookie.
+- **/auth/callback**: Handles the Cognito callback, exchanges authorization code for tokens, retrieves or creates a user in the database, and sets an access token cookie.
+
+## Implementation Details
+- **`app/routes/auth_routes.py`**: Defines the `/auth` endpoints for login, logout, and callback.
+- **`app/services/auth_service.py`**: Handles token exchange, JWT decoding, and user retrieval/creation.
+  
