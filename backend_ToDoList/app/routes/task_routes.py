@@ -19,8 +19,6 @@ def create_task(task_create: TaskCreate, db: Session = Depends(get_db), user = D
     if not user:
         raise HTTPException(status_code=401, detail="Unauthorized")
 
-    print(user.id)
-
     task_saved = task_service.create_task(db=db, task_create=task_create, user_id=user.id)
     return task_saved
     
@@ -41,6 +39,11 @@ def update_task_status(task_update: TaskUpdate, db: Session = Depends(get_db)):
 
 @router.put("/editTask", response_model=TaskRead)
 def update_task(task_update: TaskUpdate, db: Session = Depends(get_db)):
+    task = task_service.update_task(db=db, task_update=task_update)
+    return task
+
+@router.put("/updatePriority", response_model=TaskRead)
+def update_task_priority(task_update: TaskUpdate, db: Session = Depends(get_db)):
     task = task_service.update_task(db=db, task_update=task_update)
     return task
 
