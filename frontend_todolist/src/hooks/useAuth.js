@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { login, logout } from "../services/authService";
+import { login, logout, signUp } from "../services/authService";
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -30,6 +30,10 @@ export const useAuth = () => {
     await login()
   };
 
+  const handleSignUp = async () => {
+    await signUp()
+  };
+
   const handleLogout = async () => {
     await logout();
     setIsSignedIn(false);
@@ -40,6 +44,7 @@ export const useAuth = () => {
     user,
     isSignedIn,
     handleLogin,
+    handleSignUp,
     handleLogout
   };
 };
