@@ -204,4 +204,4 @@ This task introduces a new API endpoint for user registration, allowing for savi
 
 ### 1. Created Endpoint for User Registration
 **Endpoints Added**:
-- `/users/register`: Registers a new user and saves the user data to the database, including fields such as username, email, and password.
+- `api/auth/signup`: Redirects the user to the hosted UI from AWS Cognito.
