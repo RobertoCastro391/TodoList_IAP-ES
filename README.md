@@ -17,11 +17,17 @@
 ### 06/11/2024 - 14:45
 
 ### US 2.2: Implement Login Functionality
-- **API Enpoint**: implemented and documented *[**TDLIE-55** Updates to endpoints to previous endpoints to allow integration with AWS Cognito](./backend_ToDoList/README.md)*
-- **UI**: implemented and documented *[**TDLIE-56** Update the UI to allow integration with AWS Cognito (React)](./frontend_todolist/README.md)*
+- **API Enpoint**: implemented and documented *[**TDLIE-55** Implement API endpoint for login](./backend_ToDoList/README.md)*
+- **UI**: implemented and documented *[**TDLIE-56** Integrate AWS Cognito for login functionality (React)](./frontend_todolist/README.md)*
 
-### 06/11/2024 - 14:45
+### 06/11/2024 - 22:30
 
 ### US 2.1: Implement Registration Functionality
-- **API Enpoint**: implemented and documented *[**TDLIE-52** Updates to endpoints to previous endpoints to allow integration with AWS Cognito](./backend_ToDoList/README.md)*
-- **UI**: implemented and documented *[**TDLIE-53** Update the UI to allow integration with AWS Cognito (React)](./frontend_todolist/README.md)*
+- **API Enpoint**: implemented and documented *[**TDLIE-52** Implement API endpoint for register and save user in Database](./backend_ToDoList/README.md)*
+- **UI**: implemented and documented *[**TDLIE-53** Integrate AWS Cognito for registration functionality (React)](./frontend_todolist/README.md)*
+
+### 06/11/2024 - 23:15
+
+### US 1.5: Task Prioritization
+- **API Enpoint**: implemented and documented *[**TDLIE-38** Implement priority assignment API enpoint](./backend_ToDoList/README.md)*
+- **UI**: implemented and documented *[**TDLIE-39** Update the UI to allow setting priorities (React)](./frontend_todolist/README.md)*
