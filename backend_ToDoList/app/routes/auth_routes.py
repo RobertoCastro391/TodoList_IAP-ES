@@ -32,6 +32,21 @@ async def login_redirect():
   
     return RedirectResponse(url=cognito_url)
 
+# Redirect to Cognito Signup
+@router.get("/signup", status_code=302)
+async def signup_redirect():
+    # Construct the URL manually with a different approach
+    query_params = {
+        "client_id": CLIENT_ID,
+        "response_type": "code",
+        "scope": "openid email profile",
+        "redirect_uri": REDIRECT_URI,
+        "login_hint": "",  # Often forces Cognito to consider sign-up if not registered
+    }
+    cognito_url = f"https://{COGNITO_DOMAIN}/signup?{urlencode(query_params)}"
+
+    return RedirectResponse(url=cognito_url)
+
 # Redirect to Cognito Logout
 @router.get("/logout")
 async def logout():
