@@ -131,3 +131,20 @@ This task involved integrating AWS Cognito into the application to manage user l
     - After Cognito redirects back with an authorization code, the backend exchanges it for tokens, sets an HTTP-only `access_token` cookie, and redirects the user back to the frontend.
   - **Logout**:
     - `handleLogout` clears the `access_token` by calling the `/auth/logout` endpoint, which removes the session and updates the UI.
+
+
+### 06/11/2024 - 21:55
+
+# TDLIE-53: Integrate AWS Cognito for registration functionality
+
+## Overview
+This task involved integrating AWS Cognito into the application to manage user registration.
+
+## UI Details
+- **Components Updated**:
+  - `Sidebar`: Displays a register button.
+  - `useAuth`: Added a new funtion **`handleSignUp`** to be called when a user clicks on the _Register Button_.
+  - `authService`: Added a new funtion **`signUp`** to redirect to the correct endpoint.
+
+- **Interaction Flow**:
+  - **Register**: When the user clicks on the **Register** button, they are redirected to the AWS Cognito-hosted register page.
