@@ -148,3 +148,20 @@ This task involved integrating AWS Cognito into the application to manage user r
 
 - **Interaction Flow**:
   - **Register**: When the user clicks on the **Register** button, they are redirected to the AWS Cognito-hosted register page.
+
+### 06/11/2024 - 23:00
+
+# TDLIE-39: Update the UI to allow setting priorities
+
+## Overview
+This task updates the UI to allow users to set task priorities within the React application. It introduces a dropdown for priority selection and ensures that tasks can be created or edited with a designated priority level.
+
+### 1. Updated UI for Task Priority Setting
+**Changes Made:**
+- Added a priority dropdown in the task creation and edit forms to allow users to set priorities (Low, Medium, High).
+- Updated task display components to show priority levels alongside task titles.
+
+**UI Elements Modified:**
+- Task creation form: Added a new select dropdown for setting priority.
+- Task edit form: Integrated priority selection to allow users to modify priorities.
+- Task display component: Displayed priority level next to each task for easier identification.
