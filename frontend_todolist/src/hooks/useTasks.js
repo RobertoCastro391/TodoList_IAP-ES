@@ -14,6 +14,7 @@ export const useTasks = (isSignedIn) => {
   const [selectedTask, setSelectedTask] = useState(null);
 
   useEffect(() => {
+    console.log("isSignedIn:", isSignedIn);
     if (isSignedIn) {
       loadTasks();
     }
@@ -21,8 +22,7 @@ export const useTasks = (isSignedIn) => {
 
   const loadTasks = async () => {
     try {
-      const userId = localStorage.getItem("user_id");
-      const response = await fetchUserTasks(userId);
+      const response = await fetchUserTasks();
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
@@ -35,9 +35,11 @@ export const useTasks = (isSignedIn) => {
       const newTask = {
         ...task,
         priority: "Low",
-        status: "Pending",
-        user_id: localStorage.getItem("user_id"),
+        status: "Pending"
       };
+
+      console.log(newTask);
+
       const response = await addTask(newTask);
       setTasks([...tasks, response.data]);
       showSuccessNotification("Task added successfully!");

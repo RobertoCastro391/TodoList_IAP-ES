@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Home.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import TaskList from "../../components/TaskList/TaskList";
@@ -7,10 +7,17 @@ import TaskDetails from "../../components/TaskDetails/TaskDetails";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTasks } from "../../hooks/useTasks";
+import { useAuth } from "../../hooks/useAuth";
 
 const Home = () => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
 
+  const {
+    user,
+    isSignedIn,
+    handleLogin,
+    handleLogout
+  } = useAuth();
+  
   const {
     tasks,
     selectedTask,
@@ -27,13 +34,13 @@ const Home = () => {
       <div className="sidebar-container">
         <Sidebar
           isSignedIn={isSignedIn}
-          setIsSignedIn={setIsSignedIn}
-          name="Roberto Castro"
-          email="robertorcastro@gmail.com"
+          user={user}
+          onLogin={handleLogin}
+          onLogout={handleLogout}
         />
       </div>
 
-      {isSignedIn && (
+      {isSignedIn ? (
         <>
           <div className="task-list-container-home">
             <TaskList tasks={tasks} onSelectTask={setSelectedTask} />
@@ -52,6 +59,8 @@ const Home = () => {
             )}
           </div>
         </>
+      ) : (
+        <div>Please log in to view tasks.</div>
       )}
       <ToastContainer />
     </div>

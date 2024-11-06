@@ -8,16 +8,7 @@ from datetime import datetime
 from app.models.user import User
 from app.models.enums import Priority, Status
 
-def create_task(db: Session, task_create: TaskCreate) -> Task:
-    try:
-        # Check if user exists
-        user = db.query(User).filter(User.id == task_create.user_id).one()
-        print("task_create")
-        print(user)
-
-    except NoResultFound:
-        # Raise an HTTP exception if the user does not exist
-        raise HTTPException(status_code=404, detail="User not found")
+def create_task(db: Session, task_create: TaskCreate, user_id) -> Task:
 
     # Explicitly map the priority and status to the Enum types
     priority_enum = Priority(task_create.priority.value if isinstance(task_create.priority, Priority) else task_create.priority)
@@ -32,7 +23,7 @@ def create_task(db: Session, task_create: TaskCreate) -> Task:
         status=status_enum,
         created_at=datetime.now(),
         updated_at=datetime.now(),
-        user_id=user.id
+        user_id=user_id
     )
     
     db.add(task)

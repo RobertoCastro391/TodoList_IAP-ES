@@ -2,13 +2,14 @@ from fastapi import APIRouter, Response, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
 from urllib.parse import urlencode
 from sqlalchemy.orm import Session
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.encoders import jsonable_encoder
 from app.database import get_db
 from app.services import auth_service
 import os
 
 router = APIRouter(
-    prefix="/auth",
+    prefix="/api/auth",
     tags=["auth"],
 )
 
@@ -72,3 +73,9 @@ async def callback(request: Request, response: Response, db: Session = Depends(g
     redirect_response.message = message
     return redirect_response
      
+@router.get("/verify")
+async def verify_authentication(user = Depends(auth_service.get_current_user)):
+    if user:
+        user_data = jsonable_encoder(user)  # Convert the user object to a JSON-serializable format
+        return JSONResponse({"isAuthenticated": True, "user": user_data})
+    return JSONResponse({"isAuthenticated": False}, status_code=401)
