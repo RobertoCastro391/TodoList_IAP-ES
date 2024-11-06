@@ -100,3 +100,34 @@ This task was for implementing in the UI a mechanism for enabling users to set d
 ## Testing 
 - **E2E Tests**:
   - Updated the existing Cucumber tests to validate the deadline input and save.
+
+### 06/11/2024 - 14:00
+
+# TDLIE-56: Integrate AWS Cognito for login functionality
+
+## Overview
+This task involved integrating AWS Cognito into the application to manage user login and authentication. The integration allows users to securely log in and out of the application using AWS Cognito’s authentication flow.
+
+## UI Details
+- **Components Updated**:
+  - `Sidebar`: Displays login/logout options based on the authentication status.
+  - `Home`: Conditionally renders components depending on whether the user is authenticated.
+  
+- **Interaction Flow**:
+  - **Login**: When the user clicks on the **Login** button, they are redirected to the AWS Cognito-hosted login page.
+  - **Callback Handling**: After successful authentication, AWS Cognito redirects back to the application’s callback URL with an authorization code, which is exchanged for access tokens.
+  - **Logout**: When the user clicks the **Logout** button, they are logged out, and the access token is cleared.
+
+## Implementation Details
+- **Authentication Hook (`useAuth`)**:
+  - Created a custom `useAuth` hook to manage the authentication state of the application.
+  - Calls an `/auth/verify` endpoint on mount to check if the user is authenticated by verifying the access token in the cookie.
+  - Provides `handleLogin` and `handleLogout` functions to initiate the login and logout flows.
+
+- **Login and Logout Flows**:
+  - **Login**:
+    - `handleLogin` redirects the user to the `/auth/login` endpoint, which in turn redirects to Cognito’s login page.
+  - **Callback Handling**:
+    - After Cognito redirects back with an authorization code, the backend exchanges it for tokens, sets an HTTP-only `access_token` cookie, and redirects the user back to the frontend.
+  - **Logout**:
+    - `handleLogout` clears the `access_token` by calling the `/auth/logout` endpoint, which removes the session and updates the UI.

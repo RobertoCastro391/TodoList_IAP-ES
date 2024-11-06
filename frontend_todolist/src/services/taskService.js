@@ -2,14 +2,16 @@ import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export const fetchUserTasks = async (userId) => {
+export const fetchUserTasks = async () => {
   return axios.get(`${API_URL}/tasks/userTasks`, {
-    params: { user_id: userId },
+    withCredentials: true
   });
 };
 
 export const addTask = async (newTask) => {
-  return axios.post(`${API_URL}/tasks/`, newTask);
+  return axios.post(`${API_URL}/tasks/`, newTask, {
+    withCredentials: true
+  });
 };
 
 export const updateTaskStatus = async (updatedTask) => {

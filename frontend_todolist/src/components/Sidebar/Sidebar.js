@@ -13,17 +13,14 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Sidebar = ({ isSignedIn, setIsSignedIn, name, email }) => {
+const Sidebar = ({ isSignedIn, user, onLogin, onLogout }) => {
+  
   const handleSignIn = () => {
-    // Set user_id to localStorage
-    localStorage.setItem("user_id", "1");
-    setIsSignedIn(true);
+    onLogin();
   };
 
   const handleSignOut = () => {
-    // Remove user_id from localStorage
-    localStorage.removeItem("user_id");
-    setIsSignedIn(false);
+    onLogout();
   };
 
   return (
@@ -31,8 +28,8 @@ const Sidebar = ({ isSignedIn, setIsSignedIn, name, email }) => {
       {isSignedIn ? (
         <>
           <div className="profile-section">
-            <h3>{name}</h3>
-            <p>{email}</p>
+            <h3>{user.username}</h3>
+            <p>{user.email}</p>
           </div>
           <nav>
             <ul>

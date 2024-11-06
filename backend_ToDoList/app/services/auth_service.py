@@ -71,8 +71,6 @@ def get_or_create_user(user_info: dict, db: Session) -> User:
     """
     Retrieve user from the database or create a new one based on Cognito ID.
     """
-    
-    print(user_info)
 
     user = db.query(User).filter(User.cognito_id == user_info["sub"]).first()
     
@@ -85,4 +83,19 @@ def get_or_create_user(user_info: dict, db: Session) -> User:
         db.add(user)
         db.commit()
         db.refresh(user)
+    return user
+
+def get_current_user(request: Request, db: Session = Depends(get_db)) -> User:
+    """
+    Get the current user based on the access_token in the request.
+    """
+    
+    access_token = request.cookies.get("access_token")
+    
+    if not access_token:
+        raise HTTPException(status_code=401, detail="Access token not found")
+
+    user_info = decode_jwt(access_token, access_token)
+    user = get_or_create_user(user_info, db)
+    
     return user
