@@ -17,5 +17,5 @@
 ### 06/11/2024 - 
 
 ### US 2.2: Implement Login Functionality
-- **API Enpoint**: implemented and documented *[**TDLIE-55** Implement deadline assignment API endpoint](./backend_ToDoList/README.md)*
-- **UI**: implemented and documented *[**TDLIE-56** Update the UI to allow setting deadlines (React)](./frontend_todolist/README.md)*
+- **API Enpoint**: implemented and documented *[**TDLIE-55** Updates to endpoints to previous endpoints to allow integration with AWS Cognito](./backend_ToDoList/README.md)*
+- **UI**: implemented and documented *[**TDLIE-56** Update the UI to allow integration with AWS Cognito (React)](./frontend_todolist/README.md)*
