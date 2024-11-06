@@ -205,3 +205,14 @@ This task introduces a new API endpoint for user registration, allowing for savi
 ### 1. Created Endpoint for User Registration
 **Endpoints Added**:
 - `api/auth/signup`: Redirects the user to the hosted UI from AWS Cognito.
+
+### 06/11/2024 - 22:25
+
+# TDLIE-38: Implement priority assignment API enpoint
+
+## Overview
+This task introduces a new API endpoint for a priority assignment.
+
+### 1. Created Endpoint
+**Endpoints Added**:
+- `api/tasks/updatePriority`: Updated the Priority from a task calling the function in the `services/task_service.py` named **`update_task`**.
