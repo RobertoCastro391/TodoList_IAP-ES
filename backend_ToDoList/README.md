@@ -213,6 +213,6 @@ This task introduces a new API endpoint for user registration, allowing for savi
 ## Overview
 This task introduces a new API endpoint for a priority assignment.
 
-### 1. Created Endpoint for User Registration
+### 1. Created Endpoint
 **Endpoints Added**:
 - `api/tasks/updatePriority`: Updated the Priority from a task calling the function in the `services/task_service.py` named **`update_task`**.
