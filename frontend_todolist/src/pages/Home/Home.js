@@ -15,6 +15,7 @@ const Home = () => {
     user,
     isSignedIn,
     handleLogin,
+    handleSignUp,
     handleLogout
   } = useAuth();
   
@@ -36,6 +37,7 @@ const Home = () => {
           isSignedIn={isSignedIn}
           user={user}
           onLogin={handleLogin}
+          onSignUp={handleSignUp}
           onLogout={handleLogout}
         />
       </div>
