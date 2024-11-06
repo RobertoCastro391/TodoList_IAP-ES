@@ -34,7 +34,6 @@ export const useTasks = (isSignedIn) => {
     try {
       const newTask = {
         ...task,
-        priority: "Low",
         status: "Pending"
       };
 
@@ -69,20 +68,21 @@ export const useTasks = (isSignedIn) => {
     }
   };
 
-  const handleUpdateTaskDetails = async (taskToUpdate, updatedTitle, updatedDescription) => {
+  const handleUpdateTaskDetails = async (taskToUpdate, updatedTitle, updatedDescription, updatedPriority) => {
     const updatedTask = {
       task_id: taskToUpdate.id,
       title: updatedTitle,
       description: updatedDescription,
+      priority: updatedPriority
     };
 
     try {
       await updateTaskDetails(updatedTask);
       const updatedTasks = tasks.map((task) =>
-        task.id === taskToUpdate.id ? { ...task, title: updatedTitle, description: updatedDescription } : task
+        task.id === taskToUpdate.id ? { ...task, title: updatedTitle, description: updatedDescription, priority: updatedPriority } : task
       );
       setTasks(updatedTasks);
-      setSelectedTask({ ...taskToUpdate, title: updatedTitle, description: updatedDescription });
+      setSelectedTask({ ...taskToUpdate, title: updatedTitle, description: updatedDescription, priority: updatedPriority });
       showSuccessNotification("Task details updated successfully!");
     } catch (error) {
       console.error("Error updating task details:", error);
