@@ -5,6 +5,7 @@ const AddTask = ({ onAddTask }) => {
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDescription, setNewTaskDescription] = useState("");
   const [newTaskStatus, setNewTaskStatus] = useState("Pending");
+  const [newTaskPriority, setNewTaskPriority] = useState("Low");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Function to handle opening the modal
@@ -20,10 +21,11 @@ const AddTask = ({ onAddTask }) => {
   // Function to add a new task
   const handleAddTask = () => {
     if (newTaskTitle.trim() !== "") {
-      onAddTask({ title: newTaskTitle, description: newTaskDescription, status: newTaskStatus });
+      onAddTask({ title: newTaskTitle, description: newTaskDescription, status: newTaskStatus, priority: newTaskPriority });
       setNewTaskTitle("");
       setNewTaskDescription("");
       setNewTaskStatus("Pending");
+      setNewTaskPriority("Low");
       closeModal(); // Close the modal after adding a task
     }
   };
@@ -57,6 +59,18 @@ const AddTask = ({ onAddTask }) => {
                 placeholder="Enter task description"
                 rows="4"
               />
+            </div>
+            <div className="input-group">
+              <label htmlFor="taskDescription">Priority</label>
+              <select
+                id="taskPriority"
+                value={newTaskPriority}
+                onChange={(e) => setNewTaskPriority(e.target.value)}
+              >
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
             </div>
             <div className="modal-actions">
               <button className="add-button" id="addTaskButton" onClick={handleAddTask}>

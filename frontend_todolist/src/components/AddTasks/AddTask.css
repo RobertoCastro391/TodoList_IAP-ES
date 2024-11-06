@@ -93,6 +93,32 @@
     /* Prevent resizing */
 }
 
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    appearance: none; /* Removes the default dropdown arrow */
+    -webkit-appearance: none; /* For Safari */
+    -moz-appearance: none; /* For Firefox */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray"><path d="M7 10l5 5 5-5H7z"/></svg>'); /* Custom dropdown arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.input-group select:focus {
+    border-color: #ff6f61;
+    outline: none;
+}
+
+.input-group select:hover {
+    background-color: #f8f8f8;
+}
+
 .modal-actions {
     display: flex;
     justify-content: space-between;
