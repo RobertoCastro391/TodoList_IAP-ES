@@ -13,3 +13,9 @@
 ## US 1.4: Set Deadlines for Tasks
 - **API Enpoint**: implemented, tested and documented *[**TDLIE-36** Implement deadline assignment API endpoint](./backend_ToDoList/README.md)*
 - **UI**: implemented, tested and documented *[**TDLIE-37** Update the UI to allow setting deadlines (React)](./frontend_todolist/README.md)*
+
+### 06/11/2024 - 
+
+### US 2.2: Implement Login Functionality
+- **API Enpoint**: implemented and documented *[**TDLIE-55** Implement deadline assignment API endpoint](./backend_ToDoList/README.md)*
+- **UI**: implemented and documented *[**TDLIE-56** Update the UI to allow setting deadlines (React)](./frontend_todolist/README.md)*
