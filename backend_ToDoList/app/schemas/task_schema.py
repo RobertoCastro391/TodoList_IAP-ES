@@ -10,7 +10,7 @@ class TaskCreate(BaseModel):
     deadline: Optional[datetime] = None
     priority: Priority
     status: Status
-    user_id: int
+    user_id: Optional[int] = None
 
 class TaskRead(TaskCreate):
     id: int
