@@ -13,6 +13,9 @@ const TaskList = ({ tasks, onSelectTask }) => {
             <div className="task-card-content">
               <h4 id="task_title">{task.title}</h4>
               <p id="status_details">Status: <strong>{task.status}</strong></p>
+              <p id="priority_details" className={`priority-${task.priority.toLowerCase()}`}>
+                Priority: <strong>{task.priority}</strong>
+              </p>
             </div>
           </div>
         ))}

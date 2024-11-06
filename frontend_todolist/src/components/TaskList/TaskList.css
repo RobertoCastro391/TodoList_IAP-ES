@@ -51,7 +51,7 @@
     color: #333;
 }
 
-.task-card p {
+.task-card #status_details {
     margin: 5px 0 0 0;
     font-size: 1rem;
     color: #555;
@@ -63,4 +63,17 @@
     border: 1px solid #ccc;
     font-size: 1rem;
     cursor: pointer;
+}
+
+/* Priority Styles */
+.priority-low {
+    color: #28a745;
+}
+
+.priority-medium {
+    color: #ffc107;
+}
+
+.priority-high {
+    color: #dc3545;
 }
