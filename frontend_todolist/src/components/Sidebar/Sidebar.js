@@ -13,10 +13,14 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Sidebar = ({ isSignedIn, user, onLogin, onLogout }) => {
+const Sidebar = ({ isSignedIn, user, onLogin, onSignUp, onLogout }) => {
   
   const handleSignIn = () => {
     onLogin();
+  };
+
+  const handleSignUp = () => {
+    onSignUp();
   };
 
   const handleSignOut = () => {
@@ -73,7 +77,7 @@ const Sidebar = ({ isSignedIn, user, onLogin, onLogout }) => {
               <FontAwesomeIcon icon={faSignInAlt} className="icon" />
               Login
             </li>
-            <li>
+            <li onClick={handleSignUp}>
               <FontAwesomeIcon icon={faUserPlus} className="icon" />
               Register
             </li>

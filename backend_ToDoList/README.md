@@ -195,3 +195,13 @@ This task introduces several new authentication endpoints using AWS Cognito, inc
 - **`app/routes/auth_routes.py`**: Defines the `/auth` endpoints for login, logout, and callback.
 - **`app/services/auth_service.py`**: Handles token exchange, JWT decoding, and user retrieval/creation.
   
+### 06/11/2024 - 21:40
+
+# TDLIE-52: Implement API Endpoint for Registe and Save User in Database
+
+## Overview
+This task introduces a new API endpoint for user registration, allowing for saving user data to the database. It also includes tests for the endpoint to ensure functionality and reliability.
+
+### 1. Created Endpoint for User Registration
+**Endpoints Added**:
+- `api/auth/signup`: Redirects the user to the hosted UI from AWS Cognito.
