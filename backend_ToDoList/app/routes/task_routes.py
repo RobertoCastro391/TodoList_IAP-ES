@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from app.models.task import Task
+from app.models.enums import Priority, Status
 from app.schemas.task_schema import TaskCreate, TaskRead, TaskUpdate
 from app.database import get_db
 from app.services import task_service, auth_service
@@ -28,9 +28,10 @@ def read_user_tasks(
     user=Depends(auth_service.get_current_user),
     page: int = Query(1, ge=1, description="Page number starting from 1"),
     limit: int = Query(5, ge=1, le=100, description="Number of tasks per page (max 100)"),
-    sort_by: Optional[str] = Query("creation_date", description="Field to sort by: creation_date, deadline, or completion_status"),
+    sort_by: Optional[str] = Query("creation_date", description="Field to sort by: creation_date, deadline, completion_status, or priority"),
     order: Optional[str] = Query("asc", description="Sort order: asc or desc"),
-    status: Optional[bool] = Query(None, description="Filter by completion status: true for completed, false for not completed")
+    status: Optional[Status] = Query(None, description="Filter by completion status: Pending, In Progress, or Completed"),
+    priority: Optional[Priority] = Query(None, description="Filter by priority: Low, Medium, or High")
 ):
     if not user:
         raise HTTPException(status_code=401, detail="Unauthorized")
@@ -45,7 +46,8 @@ def read_user_tasks(
         limit=limit,
         sort_by=sort_by,
         order=order,
-        status=status
+        status=status,
+        priority=priority
     )
     return tasks
 

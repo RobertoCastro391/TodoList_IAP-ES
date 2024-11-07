@@ -39,7 +39,8 @@ def get_user_tasks(
     limit: int = 5,
     sort_by: str = "creation_date",
     order: str = "asc",
-    status: Optional[bool] = None
+    status: Optional[Status] = None,
+    priority: Optional[Priority] = None
 ) -> List[Task]:
     # Find user by id
     user = db.query(User).filter(User.id == user_id).first()
@@ -50,12 +51,16 @@ def get_user_tasks(
     # Base query for user's tasks
     query = db.query(Task).filter(Task.user_id == user_id)
 
-    # Apply completion status filter if provided
+    # Apply status filter if provided
     if status is not None:
-        query = query.filter(Task.completed == status)
+        query = query.filter(Task.status == status.value)
+
+    # Apply priority filter if provided
+    if priority is not None:
+        query = query.filter(Task.priority == priority.value)
 
     # Apply sorting based on the provided field and order
-    sort_field = getattr(Task, sort_by, Task.created_at)  # Default to `creation_date` if field is invalid
+    sort_field = getattr(Task, sort_by, Task.creation_date)  # Default to `creation_date` if field is invalid
     if order == "asc":
         query = query.order_by(asc(sort_field))
     else:
