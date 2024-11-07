@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from app.models.enums import Priority, Status
 from app.schemas.user_schema import UserRead
 
@@ -28,3 +28,7 @@ class TaskUpdate(BaseModel):
     deadline: Optional[datetime] = None
     priority: Optional[Priority] = Priority.MEDIUM
     status: Optional[Status] = Status.PENDING
+
+class TaskResponse(BaseModel):
+    tasks: List[TaskRead]
+    total_pages: int

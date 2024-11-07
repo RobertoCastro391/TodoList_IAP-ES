@@ -37,7 +37,7 @@ def get_user_tasks(
     user_id: int,
     skip: int = 0,
     limit: int = 5,
-    sort_by: str = "creation_date",
+    sort_by: str = "created_at",
     order: str = "asc",
     status: Optional[Status] = None,
     priority: Optional[Priority] = None
@@ -60,7 +60,7 @@ def get_user_tasks(
         query = query.filter(Task.priority == priority.value)
 
     # Apply sorting based on the provided field and order
-    sort_field = getattr(Task, sort_by, Task.creation_date)  # Default to `creation_date` if field is invalid
+    sort_field = getattr(Task, sort_by, Task.created_at)  # Default to `created_at` if field is invalid
     if order == "asc":
         query = query.order_by(asc(sort_field))
     else:
@@ -69,6 +69,16 @@ def get_user_tasks(
     # Apply pagination
     tasks = query.offset(skip).limit(limit).options(joinedload(Task.user)).all()
     return tasks
+
+def get_task_count(db: Session, user_id: int, status: Optional[Status] = None, priority: Optional[Priority] = None) -> int:
+    query = db.query(Task).filter(Task.user_id == user_id)
+    
+    if status:
+        query = query.filter(Task.status == status)
+    if priority:
+        query = query.filter(Task.priority == priority)
+
+    return query.count()
 
 def get_tasks(db: Session) -> list:
     return db.query(Task).options(joinedload(Task.user)).all()

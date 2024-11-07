@@ -225,12 +225,12 @@ This task introduces a new API endpoint for a priority assignment.
 This task enhances the **`/userTasks`** endpoint in the tasks API by adding pagination, sorting, and filtering capabilities. These improvements allow users to retrieve tasks based on specified criteria, including _creation date_, _deadline_, _completion status_, and _priority_. Additionally, users can filter tasks by their _completion status_ and _priority_.
 
 ## Endpoint Implementation
-- **`/api/tasks/userTasks`**: Retrieves a paginated list of tasks for a specific user, with support for sorting by *creation_date*, _deadline_, *completion_status*, and _priority_, and filtering by _status_ and _priority_.
+- **`/api/tasks/userTasks`**: Retrieves a paginated list of tasks for a specific user, with support for sorting by *created_at*, _deadline_, *completion_status*, and _priority_, and filtering by _status_ and _priority_.
 
 ### Query Parameters
 - **`page`**: Specifies the page number for pagination. Starts from `1`.
 - **`limit`**: The number of tasks per page (max `100`).
-- **`sort_by`**: Specifies the field to sort by. Options: `creation_date`, `deadline`, `completion_status`, `priority`.
+- **`sort_by`**: Specifies the field to sort by. Options: `created_at`, `deadline`, `completion_status`, `priority`.
 - **`order`**: Specifies the order of sorting. Options: `asc` (ascending) or `desc` (descending).
 - **`status`**: Filters tasks based on completion status. Options: `Pending`, `In Progress`, or `Completed`.
 - **`priority`**: Filters tasks based on priority. Options: `Low`, `Medium`, or `High`.
@@ -241,6 +241,6 @@ This task enhances the **`/userTasks`** endpoint in the tasks API by adding pagi
   - **User Verification**: Verifies the user’s existence before retrieving tasks.
   - **Status Filtering**: Filters tasks based on the Status enum (PENDING, IN_PROGRESS, COMPLETED).
   - **Priority Filtering**: Filters tasks based on the Priority enum (LOW, MEDIUM, HIGH).
-  - **Sorting Logic**: Sorts tasks by the specified field (**`creation_date`**, **`deadline`**, **`completion_status`**, **`priority`**) and order (**`asc`**, **`desc`**).
+  - **Sorting Logic**: Sorts tasks by the specified field (**`created_at`**, **`deadline`**, **`completion_status`**, **`priority`**) and order (**`asc`**, **`desc`**).
   - **Pagination**: Applies `skip` and `limit` to support pagination.
 
