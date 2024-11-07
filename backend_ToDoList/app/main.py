@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, Base
 from app.routes import task_routes, user_routes, auth_routes
-from app.models import task, user, task_history
 
 app = FastAPI()
 

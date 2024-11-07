@@ -1,7 +1,8 @@
 # services/task_service.py
 from sqlalchemy.orm import Session, joinedload
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy import asc, desc
 from fastapi import HTTPException
+from typing import List, Optional
 from app.models.task import Task
 from app.schemas.task_schema import TaskCreate, TaskUpdate
 from datetime import datetime
@@ -31,15 +32,43 @@ def create_task(db: Session, task_create: TaskCreate, user_id) -> Task:
     db.refresh(task)
     return task
 
-def get_user_tasks(db: Session, user_id: int) -> list:
-    
+def get_user_tasks(
+    db: Session,
+    user_id: int,
+    skip: int = 0,
+    limit: int = 5,
+    sort_by: str = "creation_date",
+    order: str = "asc",
+    status: Optional[Status] = None,
+    priority: Optional[Priority] = None
+) -> List[Task]:
     # Find user by id
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         # If the user does not exist, raise an HTTP exception
         raise HTTPException(status_code=404, detail="User not found")
 
-    return db.query(Task).filter(Task.user_id == user_id).options(joinedload(Task.user)).all()
+    # Base query for user's tasks
+    query = db.query(Task).filter(Task.user_id == user_id)
+
+    # Apply status filter if provided
+    if status is not None:
+        query = query.filter(Task.status == status.value)
+
+    # Apply priority filter if provided
+    if priority is not None:
+        query = query.filter(Task.priority == priority.value)
+
+    # Apply sorting based on the provided field and order
+    sort_field = getattr(Task, sort_by, Task.creation_date)  # Default to `creation_date` if field is invalid
+    if order == "asc":
+        query = query.order_by(asc(sort_field))
+    else:
+        query = query.order_by(desc(sort_field))
+
+    # Apply pagination
+    tasks = query.offset(skip).limit(limit).options(joinedload(Task.user)).all()
+    return tasks
 
 def get_tasks(db: Session) -> list:
     return db.query(Task).options(joinedload(Task.user)).all()

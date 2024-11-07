@@ -1,8 +1,7 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy.orm import Session
-from typing import List
-
-from app.models.task import Task
+from typing import List, Optional
+from app.models.enums import Priority, Status
 from app.schemas.task_schema import TaskCreate, TaskRead, TaskUpdate
 from app.database import get_db
 from app.services import task_service, auth_service
@@ -24,12 +23,32 @@ def create_task(task_create: TaskCreate, db: Session = Depends(get_db), user = D
     
 
 @router.get("/userTasks", response_model=List[TaskRead])
-def read_user_tasks(db: Session = Depends(get_db), user = Depends(auth_service.get_current_user)):
-    
+def read_user_tasks(
+    db: Session = Depends(get_db),
+    user=Depends(auth_service.get_current_user),
+    page: int = Query(1, ge=1, description="Page number starting from 1"),
+    limit: int = Query(5, ge=1, le=100, description="Number of tasks per page (max 100)"),
+    sort_by: Optional[str] = Query("creation_date", description="Field to sort by: creation_date, deadline, completion_status, or priority"),
+    order: Optional[str] = Query("asc", description="Sort order: asc or desc"),
+    status: Optional[Status] = Query(None, description="Filter by completion status: Pending, In Progress, or Completed"),
+    priority: Optional[Priority] = Query(None, description="Filter by priority: Low, Medium, or High")
+):
     if not user:
         raise HTTPException(status_code=401, detail="Unauthorized")
     
-    tasks = task_service.get_user_tasks(db=db, user_id=user.id)
+    skip = (page - 1) * limit
+
+    # Call the service function with sorting, filtering, and pagination
+    tasks = task_service.get_user_tasks(
+        db=db,
+        user_id=user.id,
+        skip=skip,
+        limit=limit,
+        sort_by=sort_by,
+        order=order,
+        status=status,
+        priority=priority
+    )
     return tasks
 
 @router.put("/updateStatus", response_model=TaskRead)
