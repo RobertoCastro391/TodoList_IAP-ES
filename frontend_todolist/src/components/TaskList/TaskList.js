@@ -33,7 +33,7 @@ const TaskList = ({
         <select onChange={(e) => onStatusFilterChange(e.target.value)}>
           <option value="">All</option>
           <option value="Pending">Pending</option>
-          <option value="In Progress">In Progress</option>
+          <option value="In_Progress">In Progress</option>
           <option value="Completed">Completed</option>
         </select>
         <select onChange={(e) => onPriorityFilterChange(e.target.value)}>
