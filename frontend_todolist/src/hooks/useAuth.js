@@ -15,7 +15,6 @@ export const useAuth = () => {
         const response = await axios.get(`${API_URL}/auth/verify`, { withCredentials: true });
         if (response.data.isAuthenticated) {
           setIsSignedIn(true);
-          console.log(response.data.user);
           setUser(response.data.user);  // Set user details if needed
         }
       } catch (error) {

@@ -12,23 +12,43 @@ import { showSuccessNotification, showErrorNotification } from "../utils/notific
 export const useTasks = (isSignedIn) => {
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [sortBy, setSortBy] = useState("created_at");
+  const [order, setOrder] = useState("asc");
+  const [statusFilter, setStatusFilter] = useState(null);
+  const [priorityFilter, setPriorityFilter] = useState(null);
 
   useEffect(() => {
-    console.log("isSignedIn:", isSignedIn);
     if (isSignedIn) {
-      loadTasks();
+      loadTasks(currentPage);
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, currentPage, sortBy, order, statusFilter, priorityFilter]);
 
-  const loadTasks = async () => {
+  const loadTasks = async (page) => {
     try {
-      const response = await fetchUserTasks();
-      setTasks(response.data);
+      const response = await fetchUserTasks(page, 5, sortBy, order, statusFilter, priorityFilter);
+      setTasks(response.data.tasks);
+      setTotalPages(response.data.total_pages);
     } catch (error) {
-      console.error("Error fetching tasks:", error);
       showErrorNotification("Failed to fetch tasks. Please try again.");
     }
   };
+
+  const onPageChange = (page) => setCurrentPage(page);
+  const onSortChange = (field) => setSortBy(field);
+  const onOrderChange = (order) => setOrder(order);
+  const onStatusFilterChange = (status) => setStatusFilter(status);
+  const onPriorityFilterChange = (priority) => setPriorityFilter(priority);
+
+  const clearFilters = () => {
+    setSortBy("created_at");
+    setOrder("asc");
+    setStatusFilter(null);
+    setPriorityFilter(null);
+    setCurrentPage(1);
+  };
+
 
   const handleAddTask = async (task) => {
     try {
@@ -128,11 +148,19 @@ export const useTasks = (isSignedIn) => {
   return {
     tasks,
     selectedTask,
+    currentPage,
+    totalPages,
     handleAddTask,
     handleUpdateTaskStatus,
     handleUpdateTaskDetails,
     handleDeleteTask,
     setSelectedTask,
     handleUpdateDeadline,
+    onPageChange,
+    onSortChange,
+    onOrderChange,
+    onStatusFilterChange,
+    onPriorityFilterChange,
+    clearFilters
   };
 };

@@ -10,24 +10,26 @@ import { useTasks } from "../../hooks/useTasks";
 import { useAuth } from "../../hooks/useAuth";
 
 const Home = () => {
+  const { user, isSignedIn, handleLogin, handleSignUp, handleLogout } =
+    useAuth();
 
-  const {
-    user,
-    isSignedIn,
-    handleLogin,
-    handleSignUp,
-    handleLogout
-  } = useAuth();
-  
   const {
     tasks,
     selectedTask,
+    currentPage,
+    totalPages,
     handleAddTask,
     handleUpdateTaskStatus,
     handleUpdateTaskDetails,
     handleDeleteTask,
     setSelectedTask,
     handleUpdateDeadline,
+    onPageChange,
+    onSortChange,
+    onOrderChange,
+    onStatusFilterChange,
+    onPriorityFilterChange,
+    clearFilters
   } = useTasks(isSignedIn);
 
   return (
@@ -45,7 +47,18 @@ const Home = () => {
       {isSignedIn ? (
         <>
           <div className="task-list-container-home">
-            <TaskList tasks={tasks} onSelectTask={setSelectedTask} />
+          <TaskList
+            tasks={tasks}
+            onSelectTask={setSelectedTask}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+            onSortChange={onSortChange}
+            onOrderChange={onOrderChange}
+            onStatusFilterChange={onStatusFilterChange}
+            onPriorityFilterChange={onPriorityFilterChange}
+            onClearFilters={clearFilters}
+          />
           </div>
 
           <div className="task-form-and-details">

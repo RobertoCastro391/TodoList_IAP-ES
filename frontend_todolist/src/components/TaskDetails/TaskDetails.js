@@ -155,7 +155,7 @@ const TaskDetails = ({
                 <option value="Pending" id="pending">
                   Pending
                 </option>
-                <option value="In Progress" id="In Progress">
+                <option value="In_Progress" id="In_Progress">
                   In Progress
                 </option>
                 <option value="Completed" id="Completed">
@@ -188,7 +188,7 @@ const TaskDetails = ({
                 icon={
                   task.status === "Pending"
                     ? faSpinner
-                    : task.status === "In Progress"
+                    : task.status === "In_Progress"
                     ? faPlayCircle
                     : faCheckCircle
                 }

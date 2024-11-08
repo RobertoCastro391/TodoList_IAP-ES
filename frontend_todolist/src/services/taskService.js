@@ -2,9 +2,19 @@ import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export const fetchUserTasks = async () => {
+export const fetchUserTasks = async (page = 1, limit = 5, sortBy = "created_at", order = "asc", status = null, priority = null) => {
+  const params = {
+    page,
+    limit,
+    sort_by: sortBy,
+    order,
+    ...(status && { status }),
+    ...(priority && { priority }),
+  };
+
   return axios.get(`${API_URL}/tasks/userTasks`, {
-    withCredentials: true
+    params,
+    withCredentials: true,
   });
 };
 
