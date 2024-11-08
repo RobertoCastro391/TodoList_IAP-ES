@@ -7,5 +7,5 @@ class Priority(enum.Enum):
 
 class Status(enum.Enum):
     PENDING = "Pending"
-    IN_PROGRESS = "In Progress"
+    IN_PROGRESS = "In_Progress"
     COMPLETED = "Completed"

@@ -165,3 +165,17 @@ This task updates the UI to allow users to set task priorities within the React 
 - Task creation form: Added a new select dropdown for setting priority.
 - Task edit form: Integrated priority selection to allow users to modify priorities.
 - Task display component: Displayed priority level next to each task for easier identification.
+
+### 08/11/2024 - 15:45
+
+# TDLIE-41: Create the UI components for sorting and filtering tasks (React)
+## Overview
+This pull request includes the creation of UI components for sorting and filtering tasks in the To-Do List application (React).
+
+### 1. UI Components for Sorting and Filtering
+- **Purpose**: Implemented components to allow users to sort and filter tasks based on specific criteria in the task list view.
+
+#### Implementation Details:
+- Added dropdowns for sorting by fields like `created_at`, `deadline`, `status`, and `priority`.
+- Added options for filtering by task status (`Pending`, `In_Progress`, `Completed`) and priority (`Low`, `Medium`, `High`).
+- Created a "Clear Filters" button to reset filters to default values.

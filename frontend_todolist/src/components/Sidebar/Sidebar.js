@@ -35,7 +35,7 @@ const Sidebar = ({ isSignedIn, user, onLogin, onSignUp, onLogout }) => {
             <h3>{user.username}</h3>
             <p>{user.email}</p>
           </div>
-          <nav>
+          {/* <nav>
             <ul>
               <li>
                 <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
@@ -62,7 +62,7 @@ const Sidebar = ({ isSignedIn, user, onLogin, onSignUp, onLogout }) => {
                 Help
               </li>
             </ul>
-          </nav>
+          </nav> */}
           <div className="logout-section" onClick={handleSignOut}>
             <FontAwesomeIcon icon={faSignOutAlt} className="icon" />
             Logout
