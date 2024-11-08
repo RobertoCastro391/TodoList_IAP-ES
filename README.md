@@ -31,3 +31,9 @@
 ### US 1.5: Task Prioritization
 - **API Enpoint**: implemented and documented *[**TDLIE-38** Implement priority assignment API enpoint](./backend_ToDoList/README.md)*
 - **UI**: implemented and documented *[**TDLIE-39** Update the UI to allow setting priorities (React)](./frontend_todolist/README.md)*
+
+### 08/11/2024 - 16:00
+
+### US 1.6: Sort and Filter Tasks
+- **API Enpoint**: implemented and documented *[**TDLIE-40** Implement sort and filter functionality in the API](./backend_ToDoList/README.md)*
+- **UI**: implemented and integrated and documented *[**TDLIE-41** Create the UI components for sorting and filtering tasks (React)](./frontend_todolist/README.md)*
