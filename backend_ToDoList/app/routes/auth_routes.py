@@ -18,6 +18,7 @@ CLIENT_ID = os.getenv("COGNITO_APP_CLIENT_ID")
 REDIRECT_URI = os.getenv("REDIRECT_URI")
 COGNITO_DOMAIN = os.getenv("COGNITO_DOMAIN")
 LOGOUT_URI = os.getenv("LOGOUT_URI")
+REDIRECT_URI_WEB = os.getenv("REDIRECT_URI_WEB")
 
 # Redirect to Cognito Login
 @router.get("/login", status_code=302)
@@ -81,7 +82,7 @@ async def callback(request: Request, response: Response, db: Session = Depends(g
     created_user = auth_service.get_or_create_user(user_info, db)
 
     # Set the access_token in a cookie
-    redirect_response = RedirectResponse(url="http://localhost:3000/")
+    redirect_response = RedirectResponse(url=REDIRECT_URI_WEB)
     redirect_response.set_cookie(key="access_token", value=access_token, httponly=True, max_age=3600, secure=True, samesite="strict")
 
     message = "User created" if created_user else "User already exists"
