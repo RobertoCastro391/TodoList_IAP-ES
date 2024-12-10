@@ -177,3 +177,70 @@ This task focused on implementing an API endpoint to assign deadlines to tasks. 
 - **Service (`task_service.py`)**:
   - Implemented the `put_deadline_on_task` function to update the `deadline` and `updated_at` fields of the task.
   - Utilizes the `get_task_by_id` helper function to locate the task before updating.
+
+
+### 05/11/2024 - 15:30
+
+# TDLIE-55: Implement API Endpoint for login
+
+## Overview
+This task introduces several new authentication endpoints using AWS Cognito, including login, logout, and callback functionalities. It also includes enhancements to the token exchange and user management logic, alongside integrating user creation or retrieval based on Cognito IDs 
+
+## Enpoint Implementation
+- **/auth/login**: Redirects users to the AWS Cognito login page.
+- **/auth/logout**: Logs out users by redirecting them to Cognito’s logout page and removes the access token cookie.
+- **/auth/callback**: Handles the Cognito callback, exchanges authorization code for tokens, retrieves or creates a user in the database, and sets an access token cookie.
+
+## Implementation Details
+- **`app/routes/auth_routes.py`**: Defines the `/auth` endpoints for login, logout, and callback.
+- **`app/services/auth_service.py`**: Handles token exchange, JWT decoding, and user retrieval/creation.
+  
+### 06/11/2024 - 21:40
+
+# TDLIE-52: Implement API Endpoint for Registe and Save User in Database
+
+## Overview
+This task introduces a new API endpoint for user registration, allowing for saving user data to the database. It also includes tests for the endpoint to ensure functionality and reliability.
+
+### 1. Created Endpoint for User Registration
+**Endpoints Added**:
+- `api/auth/signup`: Redirects the user to the hosted UI from AWS Cognito.
+
+### 06/11/2024 - 22:25
+
+# TDLIE-38: Implement priority assignment API enpoint
+
+## Overview
+This task introduces a new API endpoint for a priority assignment.
+
+### 1. Created Endpoint
+**Endpoints Added**:
+- `api/tasks/updatePriority`: Updated the Priority from a task calling the function in the `services/task_service.py` named **`update_task`**.
+
+### 06/11/2024 - 23:55
+
+# TDLIE-40: Implement sort and filter functionality in the API
+
+## Overview
+This task enhances the **`/userTasks`** endpoint in the tasks API by adding pagination, sorting, and filtering capabilities. These improvements allow users to retrieve tasks based on specified criteria, including _creation date_, _deadline_, _completion status_, and _priority_. Additionally, users can filter tasks by their _completion status_ and _priority_.
+
+## Endpoint Implementation
+- **`/api/tasks/userTasks`**: Retrieves a paginated list of tasks for a specific user, with support for sorting by *created_at*, _deadline_, *completion_status*, and _priority_, and filtering by _status_ and _priority_.
+
+### Query Parameters
+- **`page`**: Specifies the page number for pagination. Starts from `1`.
+- **`limit`**: The number of tasks per page (max `100`).
+- **`sort_by`**: Specifies the field to sort by. Options: `created_at`, `deadline`, `completion_status`, `priority`.
+- **`order`**: Specifies the order of sorting. Options: `asc` (ascending) or `desc` (descending).
+- **`status`**: Filters tasks based on completion status. Options: `Pending`, `In Progress`, or `Completed`.
+- **`priority`**: Filters tasks based on priority. Options: `Low`, `Medium`, or `High`.
+
+## Implementation Details
+- **`app/routes/task_routes.py`**: Defines the `/userTasks` endpoint with pagination, sorting, and filtering support.
+- **`app/services/task_service.py`**: Implements the business logic for retrieving tasks with specified filters and sort options.
+  - **User Verification**: Verifies the user’s existence before retrieving tasks.
+  - **Status Filtering**: Filters tasks based on the Status enum (PENDING, IN_PROGRESS, COMPLETED).
+  - **Priority Filtering**: Filters tasks based on the Priority enum (LOW, MEDIUM, HIGH).
+  - **Sorting Logic**: Sorts tasks by the specified field (**`created_at`**, **`deadline`**, **`completion_status`**, **`priority`**) and order (**`asc`**, **`desc`**).
+  - **Pagination**: Applies `skip` and `limit` to support pagination.
+
