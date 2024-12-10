@@ -53,7 +53,7 @@ async def signup_redirect():
 async def logout():
     cognito_logout_url = (
         f"https://{COGNITO_DOMAIN}/logout?"
-        f"client_id={CLIENT_ID}&logout_uri={LOGOUT_URI}"  # REDIRECT_URI deve estar registrado no Cognito
+        f"client_id={CLIENT_ID}&logout_uri={REDIRECT_URI_WEB}"  # REDIRECT_URI deve estar registrado no Cognito
     )
     response = RedirectResponse(url=cognito_logout_url)
     response.delete_cookie(key="access_token")
