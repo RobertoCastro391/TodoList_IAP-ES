@@ -1,0 +1,53 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: iap_mysqlDB
+    environment:
+      MYSQL_ROOT_PASSWORD: VERY_SECURE_PASSWORD
+      MYSQL_DATABASE: db_todolist
+      MYSQL_USER: user
+      MYSQL_PASSWORD: VERY_SECURE_PASSWORD
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "user", "--password=VERY_SECURE_PASSWORD"]
+      start_period: 10s
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data_user:/var/lib/mysql
+    networks:
+      - app_network
+
+  backend_todolist:
+    build:
+      context: ./backend_ToDoList
+      dockerfile: Dockerfile
+    container_name: backend_ToDoList
+    environment:
+      DB_USER: user
+      DB_PASSWORD: VERY_SECURE_PASSWORD
+      DB_HOST: mysql
+      DB_NAME: db_todolist
+      DB_PORT: 3306
+      COGNITO_APP_CLIENT_ID: 6v1tso66ql6ib75ssdhs5p97nl
+      COGNITO_USERPOOL_ID: eu-north-1_7kCQHkkJ2
+      COGNITO_DOMAIN: iap-todolist-rrc.auth.eu-north-1.amazoncognito.com
+      REDIRECT_URI: http://localhost:8000/api/auth/callback
+      COGNITO_APP_CLIENT_SECRET: ds0m85niurmnk31ieul5hcpjeoqahmq7qm6duffid36njvseglp
+      AWS_REGION: eu-north-1
+    ports:
+      - "8000:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - app_network
+
+volumes:
+  db_data_user:
+
+networks:
+  app_network:
+    driver: bridge

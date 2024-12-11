@@ -12,32 +12,53 @@ import { showSuccessNotification, showErrorNotification } from "../utils/notific
 export const useTasks = (isSignedIn) => {
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [sortBy, setSortBy] = useState("created_at");
+  const [order, setOrder] = useState("asc");
+  const [statusFilter, setStatusFilter] = useState(null);
+  const [priorityFilter, setPriorityFilter] = useState(null);
 
   useEffect(() => {
     if (isSignedIn) {
-      loadTasks();
+      loadTasks(currentPage);
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, currentPage, sortBy, order, statusFilter, priorityFilter]);
 
-  const loadTasks = async () => {
+  const loadTasks = async (page) => {
     try {
-      const userId = localStorage.getItem("user_id");
-      const response = await fetchUserTasks(userId);
-      setTasks(response.data);
+      const response = await fetchUserTasks(page, 5, sortBy, order, statusFilter, priorityFilter);
+      setTasks(response.data.tasks);
+      setTotalPages(response.data.total_pages);
     } catch (error) {
-      console.error("Error fetching tasks:", error);
       showErrorNotification("Failed to fetch tasks. Please try again.");
     }
   };
+
+  const onPageChange = (page) => setCurrentPage(page);
+  const onSortChange = (field) => setSortBy(field);
+  const onOrderChange = (order) => setOrder(order);
+  const onStatusFilterChange = (status) => setStatusFilter(status);
+  const onPriorityFilterChange = (priority) => setPriorityFilter(priority);
+
+  const clearFilters = () => {
+    setSortBy("created_at");
+    setOrder("asc");
+    setStatusFilter(null);
+    setPriorityFilter(null);
+    setCurrentPage(1);
+  };
+
 
   const handleAddTask = async (task) => {
     try {
       const newTask = {
         ...task,
-        priority: "Low",
-        status: "Pending",
-        user_id: localStorage.getItem("user_id"),
+        status: "Pending"
       };
+
+      console.log(newTask);
+
       const response = await addTask(newTask);
       setTasks([...tasks, response.data]);
       showSuccessNotification("Task added successfully!");
@@ -67,20 +88,21 @@ export const useTasks = (isSignedIn) => {
     }
   };
 
-  const handleUpdateTaskDetails = async (taskToUpdate, updatedTitle, updatedDescription) => {
+  const handleUpdateTaskDetails = async (taskToUpdate, updatedTitle, updatedDescription, updatedPriority) => {
     const updatedTask = {
       task_id: taskToUpdate.id,
       title: updatedTitle,
       description: updatedDescription,
+      priority: updatedPriority
     };
 
     try {
       await updateTaskDetails(updatedTask);
       const updatedTasks = tasks.map((task) =>
-        task.id === taskToUpdate.id ? { ...task, title: updatedTitle, description: updatedDescription } : task
+        task.id === taskToUpdate.id ? { ...task, title: updatedTitle, description: updatedDescription, priority: updatedPriority } : task
       );
       setTasks(updatedTasks);
-      setSelectedTask({ ...taskToUpdate, title: updatedTitle, description: updatedDescription });
+      setSelectedTask({ ...taskToUpdate, title: updatedTitle, description: updatedDescription, priority: updatedPriority });
       showSuccessNotification("Task details updated successfully!");
     } catch (error) {
       console.error("Error updating task details:", error);
@@ -126,11 +148,19 @@ export const useTasks = (isSignedIn) => {
   return {
     tasks,
     selectedTask,
+    currentPage,
+    totalPages,
     handleAddTask,
     handleUpdateTaskStatus,
     handleUpdateTaskDetails,
     handleDeleteTask,
     setSelectedTask,
     handleUpdateDeadline,
+    onPageChange,
+    onSortChange,
+    onOrderChange,
+    onStatusFilterChange,
+    onPriorityFilterChange,
+    clearFilters
   };
 };

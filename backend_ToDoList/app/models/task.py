@@ -19,4 +19,3 @@ class Task(Base):
 
     # Use string references for relationships to avoid circular imports
     user = relationship('User', back_populates='tasks')
-    history = relationship('TaskHistory', back_populates='task')

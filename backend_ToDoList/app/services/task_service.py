@@ -1,23 +1,15 @@
 # services/task_service.py
 from sqlalchemy.orm import Session, joinedload
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy import asc, desc
 from fastapi import HTTPException
+from typing import List, Optional
 from app.models.task import Task
 from app.schemas.task_schema import TaskCreate, TaskUpdate
 from datetime import datetime
 from app.models.user import User
 from app.models.enums import Priority, Status
 
-def create_task(db: Session, task_create: TaskCreate) -> Task:
-    try:
-        # Check if user exists
-        user = db.query(User).filter(User.id == task_create.user_id).one()
-        print("task_create")
-        print(user)
-
-    except NoResultFound:
-        # Raise an HTTP exception if the user does not exist
-        raise HTTPException(status_code=404, detail="User not found")
+def create_task(db: Session, task_create: TaskCreate, user_id) -> Task:
 
     # Explicitly map the priority and status to the Enum types
     priority_enum = Priority(task_create.priority.value if isinstance(task_create.priority, Priority) else task_create.priority)
@@ -32,7 +24,7 @@ def create_task(db: Session, task_create: TaskCreate) -> Task:
         status=status_enum,
         created_at=datetime.now(),
         updated_at=datetime.now(),
-        user_id=user.id
+        user_id=user_id
     )
     
     db.add(task)
@@ -40,15 +32,53 @@ def create_task(db: Session, task_create: TaskCreate) -> Task:
     db.refresh(task)
     return task
 
-def get_user_tasks(db: Session, user_id: int) -> list:
-    
+def get_user_tasks(
+    db: Session,
+    user_id: int,
+    skip: int = 0,
+    limit: int = 5,
+    sort_by: str = "created_at",
+    order: str = "asc",
+    status: Optional[Status] = None,
+    priority: Optional[Priority] = None
+) -> List[Task]:
     # Find user by id
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         # If the user does not exist, raise an HTTP exception
         raise HTTPException(status_code=404, detail="User not found")
 
-    return db.query(Task).filter(Task.user_id == user_id).options(joinedload(Task.user)).all()
+    # Base query for user's tasks
+    query = db.query(Task).filter(Task.user_id == user_id)
+
+    # Apply status filter if provided
+    if status is not None:
+        query = query.filter(Task.status == status.value)
+
+    # Apply priority filter if provided
+    if priority is not None:
+        query = query.filter(Task.priority == priority.value)
+
+    # Apply sorting based on the provided field and order
+    sort_field = getattr(Task, sort_by, Task.created_at)  # Default to `created_at` if field is invalid
+    if order == "asc":
+        query = query.order_by(asc(sort_field))
+    else:
+        query = query.order_by(desc(sort_field))
+
+    # Apply pagination
+    tasks = query.offset(skip).limit(limit).options(joinedload(Task.user)).all()
+    return tasks
+
+def get_task_count(db: Session, user_id: int, status: Optional[Status] = None, priority: Optional[Priority] = None) -> int:
+    query = db.query(Task).filter(Task.user_id == user_id)
+    
+    if status:
+        query = query.filter(Task.status == status)
+    if priority:
+        query = query.filter(Task.priority == priority)
+
+    return query.count()
 
 def get_tasks(db: Session) -> list:
     return db.query(Task).options(joinedload(Task.user)).all()

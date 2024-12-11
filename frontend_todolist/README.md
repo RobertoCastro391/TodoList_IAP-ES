@@ -100,3 +100,82 @@ This task was for implementing in the UI a mechanism for enabling users to set d
 ## Testing 
 - **E2E Tests**:
   - Updated the existing Cucumber tests to validate the deadline input and save.
+
+### 06/11/2024 - 14:00
+
+# TDLIE-56: Integrate AWS Cognito for login functionality
+
+## Overview
+This task involved integrating AWS Cognito into the application to manage user login and authentication. The integration allows users to securely log in and out of the application using AWS Cognito’s authentication flow.
+
+## UI Details
+- **Components Updated**:
+  - `Sidebar`: Displays login/logout options based on the authentication status.
+  - `Home`: Conditionally renders components depending on whether the user is authenticated.
+  
+- **Interaction Flow**:
+  - **Login**: When the user clicks on the **Login** button, they are redirected to the AWS Cognito-hosted login page.
+  - **Callback Handling**: After successful authentication, AWS Cognito redirects back to the application’s callback URL with an authorization code, which is exchanged for access tokens.
+  - **Logout**: When the user clicks the **Logout** button, they are logged out, and the access token is cleared.
+
+## Implementation Details
+- **Authentication Hook (`useAuth`)**:
+  - Created a custom `useAuth` hook to manage the authentication state of the application.
+  - Calls an `/auth/verify` endpoint on mount to check if the user is authenticated by verifying the access token in the cookie.
+  - Provides `handleLogin` and `handleLogout` functions to initiate the login and logout flows.
+
+- **Login and Logout Flows**:
+  - **Login**:
+    - `handleLogin` redirects the user to the `/auth/login` endpoint, which in turn redirects to Cognito’s login page.
+  - **Callback Handling**:
+    - After Cognito redirects back with an authorization code, the backend exchanges it for tokens, sets an HTTP-only `access_token` cookie, and redirects the user back to the frontend.
+  - **Logout**:
+    - `handleLogout` clears the `access_token` by calling the `/auth/logout` endpoint, which removes the session and updates the UI.
+
+
+### 06/11/2024 - 21:55
+
+# TDLIE-53: Integrate AWS Cognito for registration functionality
+
+## Overview
+This task involved integrating AWS Cognito into the application to manage user registration.
+
+## UI Details
+- **Components Updated**:
+  - `Sidebar`: Displays a register button.
+  - `useAuth`: Added a new funtion **`handleSignUp`** to be called when a user clicks on the _Register Button_.
+  - `authService`: Added a new funtion **`signUp`** to redirect to the correct endpoint.
+
+- **Interaction Flow**:
+  - **Register**: When the user clicks on the **Register** button, they are redirected to the AWS Cognito-hosted register page.
+
+### 06/11/2024 - 23:00
+
+# TDLIE-39: Update the UI to allow setting priorities
+
+## Overview
+This task updates the UI to allow users to set task priorities within the React application. It introduces a dropdown for priority selection and ensures that tasks can be created or edited with a designated priority level.
+
+### 1. Updated UI for Task Priority Setting
+**Changes Made:**
+- Added a priority dropdown in the task creation and edit forms to allow users to set priorities (Low, Medium, High).
+- Updated task display components to show priority levels alongside task titles.
+
+**UI Elements Modified:**
+- Task creation form: Added a new select dropdown for setting priority.
+- Task edit form: Integrated priority selection to allow users to modify priorities.
+- Task display component: Displayed priority level next to each task for easier identification.
+
+### 08/11/2024 - 15:45
+
+# TDLIE-41: Create the UI components for sorting and filtering tasks (React)
+## Overview
+This pull request includes the creation of UI components for sorting and filtering tasks in the To-Do List application (React).
+
+### 1. UI Components for Sorting and Filtering
+- **Purpose**: Implemented components to allow users to sort and filter tasks based on specific criteria in the task list view.
+
+#### Implementation Details:
+- Added dropdowns for sorting by fields like `created_at`, `deadline`, `status`, and `priority`.
+- Added options for filtering by task status (`Pending`, `In_Progress`, `Completed`) and priority (`Low`, `Medium`, `High`).
+- Created a "Clear Filters" button to reset filters to default values.

@@ -13,17 +13,18 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Sidebar = ({ isSignedIn, setIsSignedIn, name, email }) => {
+const Sidebar = ({ isSignedIn, user, onLogin, onSignUp, onLogout }) => {
+  
   const handleSignIn = () => {
-    // Set user_id to localStorage
-    localStorage.setItem("user_id", "2");
-    setIsSignedIn(true);
+    onLogin();
+  };
+
+  const handleSignUp = () => {
+    onSignUp();
   };
 
   const handleSignOut = () => {
-    // Remove user_id from localStorage
-    localStorage.removeItem("user_id");
-    setIsSignedIn(false);
+    onLogout();
   };
 
   return (
@@ -31,10 +32,10 @@ const Sidebar = ({ isSignedIn, setIsSignedIn, name, email }) => {
       {isSignedIn ? (
         <>
           <div className="profile-section">
-            <h3>{name}</h3>
-            <p>{email}</p>
+            <h3>{user.username}</h3>
+            <p>{user.email}</p>
           </div>
-          <nav>
+          {/* <nav>
             <ul>
               <li>
                 <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
@@ -61,7 +62,7 @@ const Sidebar = ({ isSignedIn, setIsSignedIn, name, email }) => {
                 Help
               </li>
             </ul>
-          </nav>
+          </nav> */}
           <div className="logout-section" onClick={handleSignOut}>
             <FontAwesomeIcon icon={faSignOutAlt} className="icon" />
             Logout
@@ -76,7 +77,7 @@ const Sidebar = ({ isSignedIn, setIsSignedIn, name, email }) => {
               <FontAwesomeIcon icon={faSignInAlt} className="icon" />
               Login
             </li>
-            <li>
+            <li onClick={handleSignUp}>
               <FontAwesomeIcon icon={faUserPlus} className="icon" />
               Register
             </li>
